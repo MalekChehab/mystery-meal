@@ -51,7 +51,7 @@ class _SignInScreenState extends State<SignInScreen> {
               form(),
               forgetPassTextRow(),
               SizedBox(height: _height / 30),
-              button(),
+              signInButton(),
               SizedBox(height: _height / 20),
               signUpTextRow(),
             ],
@@ -66,28 +66,32 @@ class _SignInScreenState extends State<SignInScreen> {
     return Stack(
       children: <Widget>[
         Opacity(
-          opacity: 0.85,
+          opacity: 0.8,
           child: ClipPath(
             clipper: CustomShapeClipper(),
             child: Container(
               height:_large? _height/4 : (_medium? _height/5.0 : _height/3.5),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.red[800], Colors.yellowAccent],
+                  colors:
+                  // [Colors.red[800], Colors.yellowAccent],
+                  [const Color(0xffFE4180), const Color(0xffFEB04E)],
                 ),
               ),
             ),
           ),
         ),
         Opacity(
-          opacity: 0.3,
+          opacity: 0.5,
           child: ClipPath(
             clipper: CustomShapeClipper2(),
             child: Container(
               height: _large? _height/4.5 : (_medium? _height/5 : _height/4),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.yellow[800], Colors.red[500]],
+                  colors:
+                  // [Colors.yellow[800], Colors.red[500]],
+                  [const Color(0xffFE4180), const Color(0xffFEB04E)]
                 ),
               ),
             ),
@@ -156,8 +160,6 @@ class _SignInScreenState extends State<SignInScreen> {
                 emailTextFormField(),
                 SizedBox(height: _height / 40.0),
                 passwordTextFormField(),
-                SizedBox(height: _height/ 40),
-                // mail(),
               ]
           )
       ),
@@ -173,25 +175,9 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  Widget mail(){
-    return TextFormField(
-      keyboardType: TextInputType.emailAddress,
-
-      decoration: const InputDecoration(
-        icon: Icon(
-            Icons.person,
-            color:Colors.red),
-        hintText: 'First Name',
-      ),
-      validator: (String value) {
-        return value.contains('@') ? 'Do not use the @ char.' : null;
-      },
-    );
-  }
-
   Widget passwordTextFormField() {
     return PasswordTextField(
-      keyboardType: TextInputType.visiblePassword,
+      keyboardType: TextInputType.text,
       textEditingController: passwordController,
       icon: Icons.lock,
       hint: "Password",
@@ -213,12 +199,13 @@ class _SignInScreenState extends State<SignInScreen> {
           ),
           GestureDetector(
             onTap: () {
+              Navigator.of(context).pushNamed(RECOVER);
               print("Routing");
             },
             child: Text(
               "Recover",
               style: TextStyle(
-                  fontWeight: FontWeight.w600, color: Colors.red[600]),
+                  fontWeight: FontWeight.w600, color: const Color(0xfffe9256)),
             ),
           )
         ],
@@ -226,11 +213,10 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  Widget button() {
+  Widget signInButton() {
     return RaisedButton(
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-
       onPressed: () {
         print("Routing to your account");
         /*
@@ -238,8 +224,8 @@ class _SignInScreenState extends State<SignInScreen> {
               .of(context)
               .showSnackBar(SnackBar(content: Text('Login Successful')));
           */
+        Navigator.of(context).pushNamed(HOME_PAGE);
       },
-
       textColor: Colors.white,
       padding: EdgeInsets.all(0.0),
       child: Container(
@@ -248,7 +234,9 @@ class _SignInScreenState extends State<SignInScreen> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
           gradient: LinearGradient(
-            colors: <Color>[Colors.red[600], Colors.yellow[400]],
+            colors:
+            // <Color>[Colors.red[600], Colors.yellow[400]],
+            [const Color(0xffFEB04E), const Color(0xffFE4180)]
           ),
         ),
         padding: const EdgeInsets.all(10.0),
@@ -259,31 +247,59 @@ class _SignInScreenState extends State<SignInScreen> {
 
   Widget signUpTextRow() {
     return Container(
-      margin: EdgeInsets.only(top: _height / 120.0),
+      margin: EdgeInsets.only(top: _height / 10.0),
       child: Row(
+        // alignment: FractionalOffset.bottomCenter,
         mainAxisAlignment: MainAxisAlignment.center,
+        // crossAxisAlignment: CrossAxisAlignment.center,
+        // mainAxisSize: MainAxisSize.max,
+        // mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           Text(
             "Don't have an account?",
             style: TextStyle(fontWeight: FontWeight.w400,fontSize: _large? 14: (_medium? 12: 10)),
           ),
           SizedBox(
-            width: 5,
+            width: 10,
           ),
           GestureDetector(
-            onTap: () {
-              Navigator.of(context).pushNamed(SIGN_UP);
-              print("Routing to Sign up screen");
+            onTapDown: (TapDownDetails details) {
+              _showPopupMenu(details.globalPosition);
             },
             child: Text(
-              "Sign up",
+              "Sign Up",
               style: TextStyle(
-                  fontWeight: FontWeight.w800, color: Colors.red[600], fontSize: _large? 19: (_medium? 17: 15)),
+                  fontWeight: FontWeight.bold,fontSize: 16, color: const Color(0xfffe825c)),
             ),
-          )
+          ),
         ],
       ),
     );
   }
 
+  void _showPopupMenu(Offset offset) async {
+    double left = offset.dx;
+    double top = offset.dy;
+    var selected = await showMenu(
+      context: context,
+      position: RelativeRect.fromLTRB(left-20, 575, 30, 30),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      elevation: 9.0,
+      color: const Color(0xffFEB04E),
+      items: [
+        PopupMenuItem(
+          value: 1,
+          child: Text("Costumer"),textStyle: new TextStyle(color: const Color(0xffFE4180),fontWeight:FontWeight.bold),
+        ),
+        PopupMenuItem(
+          value: 2,
+          child: Text("NGO"),textStyle: new TextStyle(color: const Color(0xffFE4180),fontWeight:FontWeight.bold),
+        ),
+      ],
+    );
+    if(selected == 1)
+      Navigator.of(context).pushNamed(SIGN_UP);
+    else if(selected == 2)
+      Navigator.of(context).pushNamed(NGO_SIGN_UP);
+  }
 }

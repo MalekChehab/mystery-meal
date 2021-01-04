@@ -38,16 +38,16 @@ class PasswordTextField extends StatelessWidget{
         keyboardType: keyboardType,
         cursorColor: Colors.red[500],
         decoration: InputDecoration(
-          prefixIcon: Icon(icon, color: Colors.red[600], size: 20),
+          prefixIcon: Icon(icon, color: const Color(0xffFE4180), size: 20),
           hintText: hint,
+          hintStyle: TextStyle(color: const Color(0xff000000)),
           suffixIcon: IconButton(
-            icon: Icon(Icons.remove_red_eye,color: Colors.red[500],size:20),
+            icon: Icon(Icons.remove_red_eye,color: const Color(0xffFE4180),size:20),
           ),
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30.0),
               borderSide: BorderSide.none),
         ),
-
       ),
     );
   }
@@ -86,8 +86,9 @@ class CustomTextField extends StatelessWidget {
         keyboardType: keyboardType,
         cursorColor: Colors.red[500],
         decoration: InputDecoration(
-          prefixIcon: Icon(icon, color: Colors.red[600], size: 20),
+          prefixIcon: Icon(icon, color: const Color(0xffFE4180), size: 20),
           hintText: hint,
+          hintStyle: TextStyle(color: const Color(0xff000000)),
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30.0),
               borderSide: BorderSide.none),
