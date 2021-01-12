@@ -7,6 +7,7 @@ import 'package:mystery_meal/ui/signup.dart';
 import 'package:mystery_meal/ui/ngosignup.dart';
 import 'package:mystery_meal/ui/splashscreen.dart';
 import 'package:mystery_meal/ui/homepage.dart';
+import 'package:mystery_meal/ui/mymainpage.dart';
 
 void main() => runApp(MyApp());
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
     ]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Login",
+      // title: "Login",
       theme: ThemeData(primaryColor: const Color(0xffFE4180)),
       // data: Theme.of(context).copyWith(primaryColor: Colors.redAccent,),
       routes: <String, WidgetBuilder>{
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         SIGN_UP: (BuildContext context) =>  SignUpScreen(),
         NGO_SIGN_UP: (BuildContext context) =>  NGOSignUpScreen(),
         HOME_PAGE: (BuildContext context) => MyHomePage(),
+        MAIN_PAGE: (BuildContext context) => MyMainPage(),
       },
       initialRoute: SPLASH_SCREEN,
     );

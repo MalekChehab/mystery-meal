@@ -4,7 +4,6 @@ import 'package:mystery_meal/ui/widgets/responsive_ui.dart';
 import 'package:mystery_meal/ui/widgets/textformfield.dart';
 import 'package:mystery_meal/ui/widgets/customappbar.dart';
 
-
 class RecoverPasswordScreen extends StatefulWidget {
   @override
   _RecoverPasswordScreenState createState() => _RecoverPasswordScreenState();
@@ -180,7 +179,7 @@ class _RecoverPasswordScreenState extends State<RecoverPasswordScreen> {
           gradient: LinearGradient(
               colors:
               // <Color>[Colors.red[600], Colors.yellow[400]],
-              [const Color(0xffFEB04E), const Color(0xfFE4180)]
+              [const Color(0xffFEB04E), const Color(0xffFE4180)]
           ),
         ),
         padding: const EdgeInsets.all(10.0),

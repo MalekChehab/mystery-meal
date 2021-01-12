@@ -219,11 +219,6 @@ class _SignInScreenState extends State<SignInScreen> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       onPressed: () {
         print("Routing to your account");
-        /*
-          Scaffold
-              .of(context)
-              .showSnackBar(SnackBar(content: Text('Login Successful')));
-          */
         Navigator.of(context).pushNamed(HOME_PAGE);
       },
       textColor: Colors.white,
@@ -249,11 +244,7 @@ class _SignInScreenState extends State<SignInScreen> {
     return Container(
       margin: EdgeInsets.only(top: _height / 10.0),
       child: Row(
-        // alignment: FractionalOffset.bottomCenter,
         mainAxisAlignment: MainAxisAlignment.center,
-        // crossAxisAlignment: CrossAxisAlignment.center,
-        // mainAxisSize: MainAxisSize.max,
-        // mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           Text(
             "Don't have an account?",

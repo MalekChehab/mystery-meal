@@ -1,0 +1,26 @@
+[
+  {
+    "placeImage": "assets/images/midos.png",
+    "placeName": "Midos",
+    "placeItems": ["Burgers","Chinese","Fast Food","Italian","Juice"],
+    "minOrder": 20
+  },
+  {
+    "placeImage": "assets/images/sandwichwnos.jpg",
+    "placeName": "sandwichwnos",
+    "placeItems": ["Burgers","Chinese","Fast Food","Italian","Juice"],
+    "minOrder": 50
+  },
+  {
+    "placeImage": "assets/images/midos.png",
+    "placeName": "Midos",
+    "placeItems": ["Pizza","Chinese","Fast Food","Italian","Juice"],
+    "minOrder": 20
+  },
+  {
+    "placeImage": "assets/images/sandwichwnos.jpg",
+    "placeName": "sandwichwnos",
+    "placeItems": ["Burgers","Chinese","Fast Food","Italian","Juice"],
+    "minOrder": 40
+  }
+]

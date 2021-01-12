@@ -44,6 +44,9 @@ flutter:
   assets:
     - assets/images/webzone.png
     - assets/images/mystery_meal.png
+    - assets/images/midos.png
+    - assets/images/sandwichwnos.jpg
+    - assets/data.json
 
 
   # The following line ensures that the Material Icons font is
