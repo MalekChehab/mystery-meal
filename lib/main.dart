@@ -10,6 +10,7 @@ import 'package:mystery_meal/ui/homepage.dart';
 import 'package:mystery_meal/ui/mymainpage.dart';
 import 'package:mystery_meal/models/customer.dart';
 import 'package:mystery_meal/models/user.dart';
+import 'package:mystery_meal/ui/settings.dart';
 
 void main() => runApp(MyApp());
 
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         NGO_SIGN_UP: (BuildContext context) => NGOSignUpScreen(),
         HOME_PAGE: (BuildContext context) => MyHomePage(),
         MAIN_PAGE: (BuildContext context) => MyMainPage(),
+        SETTINGS: (BuildContext context) => SettingsTwoPage(),
       },
       initialRoute: SPLASH_SCREEN,
     );
