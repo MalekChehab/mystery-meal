@@ -7,7 +7,7 @@ import 'package:mystery_meal/ui/signup.dart';
 import 'package:mystery_meal/ui/ngosignup.dart';
 import 'package:mystery_meal/ui/splashscreen.dart';
 import 'package:mystery_meal/ui/homepage.dart';
-import 'package:mystery_meal/ui/mymainpage.dart';
+import 'package:mystery_meal/ui/settings.dart';
 
 void main() => runApp(MyApp());
 
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         SIGN_UP: (BuildContext context) =>  SignUpScreen(),
         NGO_SIGN_UP: (BuildContext context) =>  NGOSignUpScreen(),
         HOME_PAGE: (BuildContext context) => MyHomePage(),
-        MAIN_PAGE: (BuildContext context) => MyMainPage(),
+        SETTINGS: (BuildContext context) => Settings(),
       },
       initialRoute: SPLASH_SCREEN,
     );
