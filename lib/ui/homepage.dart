@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
-
-import 'package:mystery_meal/ui/settings.dart';
+import 'package:mystery_meal/constants/constants.dart';
+import 'package:mystery_meal/ui/widgets/customnavigationbar.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -99,12 +99,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        IconButton(icon: Icon(Icons.menu), onPressed: () {}),
+                        IconButton(icon: Icon(Icons.fastfood), onPressed: (){}),
                         Text(
                           "Mystery Meal",
-                          style: TextStyle(fontSize: 20,),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
                         ),
-                        IconButton(icon: Icon(Icons.person), onPressed: () {})
+                        IconButton(icon: Icon(Icons.notifications), onPressed: () {})
                       ],
                     ),
                   ),
@@ -135,10 +136,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
       bottomNavigationBar: CustomBottomNavigationBar(
         iconList: [
-          Icons.home,
-          Icons.favorite,
-          Icons.list_alt_outlined,
-          Icons.settings
+          IconButton(icon: Icon(Icons.home), onPressed: (){Navigator.of(context).pushNamed(HOME_PAGE);}),
+          IconButton(icon: Icon(Icons.favorite), onPressed: (){}),
+          IconButton(icon: Icon(Icons.list_alt_outlined), onPressed: (){}),
+          IconButton(icon: Icon(Icons.settings), onPressed: (){Navigator.of(context).pushNamed(SETTINGS);})
         ],
         onChange: (val) {
           setState(() {
@@ -151,69 +152,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
-class CustomBottomNavigationBar extends StatefulWidget {
-  final int defaultSelectedIndex;
-  final Function(int) onChange;
-  final List<IconData> iconList;
-
-  CustomBottomNavigationBar({this.defaultSelectedIndex = 0, @required this.onChange,@required this.iconList});
-
-  @override
-  _CustomBottomNavigationBarState createState() => _CustomBottomNavigationBarState();
-}
-
-class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
-  int _selectedIndex = 0;
-  List<IconData> _iconList=[];
-
-  @override
-  void initState() {
-    super.initState();
-
-    _selectedIndex = widget.defaultSelectedIndex;
-    _iconList=widget.iconList;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    List<Widget> _navBarItemList=[];
-
-    for(var i=0;i<_iconList.length;i++){
-      _navBarItemList.add(buildNavBarItem(_iconList[i], i));
-    }
-    return Row(
-      children: _navBarItemList,
-    );
-  }
-
-  Widget buildNavBarItem(IconData icon, int index) {
-    return GestureDetector(
-      onTap: () {
-        widget.onChange(index);
-        setState(() {
-          _selectedIndex = index;
-        });
-      },
-      child: Container(
-        height: 60.0,
-        width: MediaQuery.of(context).size.width / _iconList.length,
-        decoration: index == _selectedIndex ? BoxDecoration(
-            border: Border(
-                bottom: BorderSide(width: 5, color: const Color(0xffFE4180))),
-            gradient: LinearGradient(colors: [
-              const Color(0xfffe9256).withOpacity(0.5),
-              const Color(0xffFE4180).withOpacity(0.03),
-            ],
-            begin: Alignment.bottomCenter,
-            end: Alignment.topCenter),
-        )
-            : BoxDecoration(), child: Icon(icon, color: index == _selectedIndex ? const Color(0xffFE4180) : Colors.black),
-      ),
-    );
-  }
-}
-
-
-
-
