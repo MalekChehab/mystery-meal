@@ -99,12 +99,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        IconButton(icon: Icon(Icons.menu), onPressed: () {}),
+                        IconButton(icon: Icon(Icons.fastfood), onPressed: (){}),
                         Text(
                           "Mystery Meal",
-                          style: TextStyle(fontSize: 20,),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
                         ),
-                        IconButton(icon: Icon(Icons.person), onPressed: () {})
+                        IconButton(icon: Icon(Icons.notifications), onPressed: () {})
                       ],
                     ),
                   ),

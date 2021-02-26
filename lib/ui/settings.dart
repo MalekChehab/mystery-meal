@@ -43,11 +43,14 @@ class _SettingsState extends State<Settings> {
                       decoration: BoxDecoration(
                         color: Colors.grey,
                         shape: BoxShape.circle,
-                        // image: DecorationImage(
-                        //   image: CachedNetworkImageProvider(avatars[1]),
-                        //   fit: BoxFit.cover,
-                        // ),
-                        border: Border.all(color: Colors.white,width: 2.0,),
+                        image: DecorationImage(
+                          image: new AssetImage('assets/images/d.jpg'),
+                          fit: BoxFit.cover,
+                        ),
+                        border: Border.all(
+                          color: Colors.white,
+                          width: 2.0,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 10.0),
@@ -55,47 +58,70 @@ class _SettingsState extends State<Settings> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text("Jane Doe", style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20.0,color: Colors.black87
-                          ),),
-                          Text("Nepal",style: TextStyle(
-                            color: Colors.grey.shade400,
-                          ),),
+                          Text(
+                            "Mohammad Ghandour",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0,
+                                color: Colors.black87),
+                          ),
+                          Text(
+                            "Lebanon",
+                            style: TextStyle(
+                              color: Colors.grey.shade400,
+                            ),
+                          ),
                         ],
                       ),
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 20.0),
                 ListTile(
                   title: Text("Languages"),
-                  subtitle: Text("English US",style: greyTExt,),
-                  trailing: Icon(Icons.keyboard_arrow_right,color: Colors.grey.shade400,),
-                  onTap: (){},
+                  subtitle: Text(
+                    "English US",
+                    style: greyTExt,
+                  ),
+                  trailing: Icon(
+                    Icons.keyboard_arrow_right,
+                    color: Colors.grey.shade400,
+                  ),
+                  onTap: () {},
                 ),
                 ListTile(
-                  title: Text("Profile Settings"),
-                  subtitle: Text("Jane Doe",style: greyTExt,),
-                  trailing: Icon(Icons.keyboard_arrow_right,color: Colors.grey.shade400,),
-                  onTap: (){},
-                ),
-                SwitchListTile(
-                  title: Text("Email Notifications"),
-                  subtitle: Text("On",style: greyTExt,),
-                  value: true,
-                  onChanged: (val){},
-                ),
-                SwitchListTile(
-                  title: Text("Push Notifications"),
-                  subtitle: Text("Off",style: greyTExt,),
-                  value: false,
-                  onChanged: (val){},
+                  title: Text("Change password"),
+                  trailing: Icon(
+                    Icons.keyboard_arrow_right,
+                    color: Colors.grey.shade400,
+                  ),
+                  onTap: () {},
                 ),
                 ListTile(
-                  title: Text("Logout"),
-                  onTap: (){},
+                  title: Text("Change phone number"),
+                  trailing: Icon(
+                    Icons.keyboard_arrow_right,
+                    color: Colors.grey.shade400,
+                  ),
+                  onTap: () {},
+                ),
+                ListTile(
+                  title: Text("Delete account"),
+                  trailing: Icon(
+                    Icons.keyboard_arrow_right,
+                    color: Colors.grey.shade400,
+                  ),
+                  onTap: () {},
+                ),
+                ListTile(
+                  title: Text(
+                    "Logout",
+                    style: TextStyle(color: Colors.red),
+                  ),
+                  trailing: Icon(
+                    Icons.warning_amber_rounded,
+                  ),
+                  onTap: () {},
                 ),
               ],
             ),
@@ -104,10 +130,18 @@ class _SettingsState extends State<Settings> {
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
         iconList: [
-          IconButton(icon: Icon(Icons.home), onPressed: (){Navigator.of(context).pushNamed(HOME_PAGE);}),
-          IconButton(icon: Icon(Icons.favorite), onPressed: (){}),
-          IconButton(icon: Icon(Icons.list_alt_outlined), onPressed: (){}),
-          IconButton(icon: Icon(Icons.settings), onPressed: (){Navigator.of(context).pushNamed(SETTINGS);})
+          IconButton(
+              icon: Icon(Icons.home),
+              onPressed: () {
+                Navigator.of(context).pushNamed(HOME_PAGE);
+              }),
+          IconButton(icon: Icon(Icons.favorite), onPressed: () {}),
+          IconButton(icon: Icon(Icons.list_alt_outlined), onPressed: () {}),
+          IconButton(
+              icon: Icon(Icons.settings),
+              onPressed: () {
+                Navigator.of(context).pushNamed(SETTINGS);
+              })
         ],
         onChange: (val) {
           setState(() {
