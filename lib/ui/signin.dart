@@ -3,6 +3,7 @@ import 'package:mystery_meal/constants/constants.dart';
 import 'package:mystery_meal/ui/widgets/custom_shape.dart';
 import 'package:mystery_meal/ui/widgets/responsive_ui.dart';
 import 'package:mystery_meal/ui/widgets/textformfield.dart';
+import 'package:mystery_meal/main.dart';
 
 
 class SignInPage extends StatelessWidget {
@@ -75,7 +76,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 gradient: LinearGradient(
                   colors:
                   // [Colors.red[800], Colors.yellowAccent],
-                  [const Color(0xffFE4180), const Color(0xffFEB04E)],
+                  [PrimaryColor, SecondaryColor],
                 ),
               ),
             ),
@@ -91,7 +92,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 gradient: LinearGradient(
                   colors:
                   // [Colors.yellow[800], Colors.red[500]],
-                  [const Color(0xffFE4180), const Color(0xffFEB04E)]
+                  [PrimaryColor, SecondaryColor]
                 ),
               ),
             ),
@@ -231,7 +232,7 @@ class _SignInScreenState extends State<SignInScreen> {
           gradient: LinearGradient(
             colors:
             // <Color>[Colors.red[600], Colors.yellow[400]],
-            [const Color(0xffFEB04E), const Color(0xffFE4180)]
+            [SecondaryColor, PrimaryColor]
           ),
         ),
         padding: const EdgeInsets.all(10.0),
@@ -276,15 +277,15 @@ class _SignInScreenState extends State<SignInScreen> {
       position: RelativeRect.fromLTRB(left-20, 575, 30, 30),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       elevation: 9.0,
-      color: const Color(0xffFEB04E),
+      color: SecondaryColor,
       items: [
         PopupMenuItem(
           value: 1,
-          child: Text("Costumer"),textStyle: new TextStyle(color: const Color(0xffFE4180),fontWeight:FontWeight.bold),
+          child: Text("Costumer"),textStyle: new TextStyle(color: PrimaryColor,fontWeight:FontWeight.bold),
         ),
         PopupMenuItem(
           value: 2,
-          child: Text("NGO"),textStyle: new TextStyle(color: const Color(0xffFE4180),fontWeight:FontWeight.bold),
+          child: Text("NGO"),textStyle: new TextStyle(color: PrimaryColor,fontWeight:FontWeight.bold),
         ),
       ],
     );

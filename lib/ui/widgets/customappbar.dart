@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mystery_meal/constants/constants.dart';
+import 'package:mystery_meal/main.dart';
 
 class CustomAppBar extends StatelessWidget {
   @override
@@ -14,7 +16,7 @@ class CustomAppBar extends StatelessWidget {
           gradient: LinearGradient(
               colors:
               // [Colors.red[600], Colors.yellow[700]]
-              [const Color(0xffFE4180), const Color(0xffFEB04E)]
+              [PrimaryColor, SecondaryColor]
           ),
         ),
         child: Row(

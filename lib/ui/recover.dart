@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mystery_meal/constants/constants.dart';
 import 'package:mystery_meal/ui/widgets/custom_shape.dart';
 import 'package:mystery_meal/ui/widgets/responsive_ui.dart';
 import 'package:mystery_meal/ui/widgets/textformfield.dart';
 import 'package:mystery_meal/ui/widgets/customappbar.dart';
+
 
 class RecoverPasswordScreen extends StatefulWidget {
   @override
@@ -62,8 +64,7 @@ class _RecoverPasswordScreenState extends State<RecoverPasswordScreen> {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors:
-                  // [Colors.red[800], Colors.yellowAccent],
-                  [const Color(0xffFE4180), const Color(0xffFEB04E)],
+                  [PrimaryColor, SecondaryColor],
                 ),
               ),
             ),
@@ -78,8 +79,7 @@ class _RecoverPasswordScreenState extends State<RecoverPasswordScreen> {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                     colors:
-                    // [Colors.yellow[800], Colors.red[500]],
-                    [const Color(0xffFE4180), const Color(0xffFEB04E)]
+                    [PrimaryColor, SecondaryColor]
                 ),
               ),
             ),
@@ -179,7 +179,7 @@ class _RecoverPasswordScreenState extends State<RecoverPasswordScreen> {
           gradient: LinearGradient(
               colors:
               // <Color>[Colors.red[600], Colors.yellow[400]],
-              [const Color(0xffFEB04E), const Color(0xffFE4180)]
+              [PrimaryColor, SecondaryColor]
           ),
         ),
         padding: const EdgeInsets.all(10.0),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mystery_meal/constants/constants.dart';
 import 'package:mystery_meal/ui/widgets/DetailsOrderButton.dart';
 import 'package:mystery_meal/ui/widgets/TitlePriceRatingDetails.dart';
 import 'package:mystery_meal/ui/widgets/ItemImage.dart';
+import 'package:mystery_meal/main.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -66,7 +68,7 @@ class ItemInfo extends StatelessWidget {
       children: <Widget>[
         Icon(
           Icons.location_on,
-          color: Color(0xffFE4180),
+          color: PrimaryColor,
 
         ),
         SizedBox(width: 10),

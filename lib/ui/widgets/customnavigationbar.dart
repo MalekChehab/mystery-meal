@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mystery_meal/constants/constants.dart';
+import 'package:mystery_meal/main.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
   final int defaultSelectedIndex;
@@ -48,16 +50,16 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         width: MediaQuery.of(context).size.width / _iconList.length,
         decoration: index == _selectedIndex ? BoxDecoration(
           border: Border(
-              bottom: BorderSide(width: 5, color: const Color(0xffFE4180))),
+              bottom: BorderSide(width: 5, color: PrimaryColor)),
           gradient: LinearGradient(colors: [
-            const Color(0xfffe9256).withOpacity(0.5),
-            const Color(0xffFE4180).withOpacity(0.03),
+            PrimaryColor.withOpacity(0.5),
+            PrimaryColor.withOpacity(0.03),
           ],
               begin: Alignment.bottomCenter,
               end: Alignment.topCenter),
         )
             : BoxDecoration(),
-        child: IconButton(icon: icon1,color: index == _selectedIndex ? const Color(0xffFE4180) : Colors.black),
+        child: IconButton(icon: icon1,color: index == _selectedIndex ? PrimaryColor : Colors.black),
       ),
     );
   }

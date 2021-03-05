@@ -22,7 +22,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // title: "Login",
-      theme: ThemeData(primaryColor: const Color(0xffFE4180)),
+      //theme: ThemeData(primaryColor: const Color(0xffFE4180)),
+      theme: ThemeData(
+          primaryColor: PrimaryColor,
+          accentColor: SecondaryColor),
       // data: Theme.of(context).copyWith(primaryColor: Colors.redAccent,),
       routes: <String, WidgetBuilder>{
         SPLASH_SCREEN: (BuildContext context) =>  SplashScreen(),

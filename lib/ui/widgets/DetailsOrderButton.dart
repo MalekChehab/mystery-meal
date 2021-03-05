@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mystery_meal/constants/constants.dart';
+import 'package:mystery_meal/main.dart';
 
 
 class OrderButton extends StatelessWidget {
@@ -18,7 +20,8 @@ class OrderButton extends StatelessWidget {
       width: size.width * 0.8,
       // it will cover 80% of total width
       decoration: BoxDecoration(
-        color: Color(0xffFE4180),
+        color: PrimaryColor,
+
 
         borderRadius: BorderRadius.circular(10),
       ),

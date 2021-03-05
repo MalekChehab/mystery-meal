@@ -24,7 +24,7 @@ class _SettingsState extends State<Settings> {
       body: Theme(
         data: Theme.of(context).copyWith(
           brightness: Brightness.dark,
-          primaryColor: Colors.purple,
+          primaryColor: PrimaryColor,
         ),
         child: DefaultTextStyle(
           style: TextStyle(

@@ -4,6 +4,7 @@ import 'package:mystery_meal/ui/widgets/custom_shape.dart';
 import 'package:mystery_meal/ui/widgets/customappbar.dart';
 import 'package:mystery_meal/ui/widgets/responsive_ui.dart';
 import 'package:mystery_meal/ui/widgets/textformfield.dart';
+import 'package:mystery_meal/main.dart';
 
 class NGOSignUpScreen extends StatefulWidget {
   @override
@@ -65,7 +66,7 @@ class _NGOSignUpScreenState extends State<NGOSignUpScreen> {
                 gradient: LinearGradient(
                     colors:
                     // [Colors.red[600], Colors.yellow[700]],
-                    [const Color(0xffFE4180), const Color(0xffFEB04E)]
+                    [PrimaryColor, SecondaryColor]
                 ),
               ),
             ),
@@ -81,7 +82,7 @@ class _NGOSignUpScreenState extends State<NGOSignUpScreen> {
                 gradient: LinearGradient(
                     colors:
                     // [Colors.red[600], Colors.yellow[700]],
-                    [const Color(0xffFE4180), const Color(0xffFEB04E)]
+                    [PrimaryColor, SecondaryColor]
                 ),
               ),
             ),
@@ -239,7 +240,7 @@ class _NGOSignUpScreenState extends State<NGOSignUpScreen> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
           gradient: LinearGradient(
-            colors: <Color>[const Color(0xffFEB04E), const Color(0xffFE4180)],
+            colors: <Color>[PrimaryColor, SecondaryColor],
           ),
         ),
         padding: const EdgeInsets.all(12.0),

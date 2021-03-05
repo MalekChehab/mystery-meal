@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-//import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mystery_meal/constants/constants.dart';
+import 'package:mystery_meal/main.dart';
 
 AppBar detailsAppBar() {
   return AppBar(
     elevation: 0,
-    backgroundColor: Color(0xffFE4180),
+    backgroundColor:PrimaryColor,
 
     leading: IconButton(
       icon: Icon(

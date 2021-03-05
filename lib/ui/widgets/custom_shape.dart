@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mystery_meal/main.dart';
 
 class CustomShapeClipper extends CustomClipper<Path> {
   @override

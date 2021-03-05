@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mystery_meal/constants/constants.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
+import 'package:mystery_meal/main.dart';
 
 class TitlePriceRating extends StatelessWidget {
   final int price, numOfReviews;
@@ -59,7 +61,7 @@ class TitlePriceRating extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 15),
         height: 66,
         width: 65,
-        color: Color(0xffFE4180),
+        color: PrimaryColor,
 
         child: Text(
           "\$$price",

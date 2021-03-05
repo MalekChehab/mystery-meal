@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mystery_meal/constants/constants.dart';
 import 'package:mystery_meal/ui/widgets/responsive_ui.dart';
+import 'package:mystery_meal/main.dart';
 
 class PasswordTextField extends StatelessWidget{
   final String hint;
@@ -38,11 +40,11 @@ class PasswordTextField extends StatelessWidget{
         keyboardType: keyboardType,
         cursorColor: Colors.red[500],
         decoration: InputDecoration(
-          prefixIcon: Icon(icon, color: const Color(0xffFE4180), size: 20),
+          prefixIcon: Icon(icon, color: PrimaryColor, size: 20),
           hintText: hint,
           hintStyle: TextStyle(color: const Color(0xff000000)),
           suffixIcon: IconButton(
-            icon: Icon(Icons.remove_red_eye,color: const Color(0xffFE4180),size:20),
+            icon: Icon(Icons.remove_red_eye,color: PrimaryColor,size:20),
           ),
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30.0),
@@ -86,7 +88,7 @@ class CustomTextField extends StatelessWidget {
         keyboardType: keyboardType,
         cursorColor: Colors.red[500],
         decoration: InputDecoration(
-          prefixIcon: Icon(icon, color: const Color(0xffFE4180), size: 20),
+          prefixIcon: Icon(icon, color: PrimaryColor, size: 20),
           hintText: hint,
           hintStyle: TextStyle(color: const Color(0xff000000)),
           border: OutlineInputBorder(
