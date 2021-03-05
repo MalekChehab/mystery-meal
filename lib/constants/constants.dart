@@ -5,3 +5,4 @@ final String RECOVER = 'recover';
 final String NGO_SIGN_UP = 'ngosignup';
 final String HOME_PAGE = 'homepage';
 final String SETTINGS = 'settings';
+final String STORE_DETAILS = 'storedetails';

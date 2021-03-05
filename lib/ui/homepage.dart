@@ -137,7 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: CustomBottomNavigationBar(
         iconList: [
           IconButton(icon: Icon(Icons.home), onPressed: (){Navigator.of(context).pushNamed(HOME_PAGE);}),
-          IconButton(icon: Icon(Icons.favorite), onPressed: (){}),
+          IconButton(icon: Icon(Icons.favorite), onPressed: (){Navigator.of(context).pushNamed(STORE_DETAILS);}),
           IconButton(icon: Icon(Icons.list_alt_outlined), onPressed: (){}),
           IconButton(icon: Icon(Icons.settings), onPressed: (){Navigator.of(context).pushNamed(SETTINGS);})
         ],
