@@ -32,7 +32,6 @@ class ItemInfo extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
-
       ),
       child: Column(
         children: <Widget>[
@@ -67,7 +66,8 @@ class ItemInfo extends StatelessWidget {
       children: <Widget>[
         Icon(
           Icons.location_on,
-          color: Colors.red,
+          color: Color(0xffFE4180),
+
         ),
         SizedBox(width: 10),
         Text(name),
