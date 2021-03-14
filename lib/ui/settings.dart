@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mystery_meal/dialogs/dialogHelper.dart';
 import 'package:mystery_meal/ui/widgets/customnavigationbar.dart';
 import 'package:mystery_meal/constants/constants.dart';
 
@@ -95,7 +96,8 @@ class _SettingsState extends State<Settings> {
                     Icons.keyboard_arrow_right,
                     color: Colors.grey.shade400,
                   ),
-                  onTap: () {},
+
+                  onTap: () => DialogHelper.changePassword(context),
                 ),
                 ListTile(
                   title: Text("Change phone number"),
