@@ -105,7 +105,7 @@ class _SettingsState extends State<Settings> {
                     Icons.keyboard_arrow_right,
                     color: Colors.grey.shade400,
                   ),
-                  onTap: () {},
+                  onTap: () => DialogHelper.changeNumber(context),
                 ),
                 ListTile(
                   title: Text("Save Credit Card"),
@@ -113,7 +113,7 @@ class _SettingsState extends State<Settings> {
                     Icons.keyboard_arrow_right,
                     color: Colors.grey.shade400,
                   ),
-                  onTap: () {},
+                  onTap: () => DialogHelper.saveCreditCard(context),
                 ),
                 ListTile(
                   title: Text("Delete account"),
