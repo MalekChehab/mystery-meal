@@ -1,7 +1,8 @@
+import 'package:mystery_meal/dialogs/deleteAccountDialog.dart';
 import 'package:mystery_meal/dialogs/passwordChangeDialog.dart';
 import 'package:flutter/material.dart';
 
 class DialogHelper {
-
   static changePassword(context) => showDialog(context: context, builder: (context) => PasswordChangeDialog());
+  static deleteAccount(context) => showDialog(context: context, builder: (context) => DeleteAccountDialog());
 }

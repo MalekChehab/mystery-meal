@@ -108,12 +108,20 @@ class _SettingsState extends State<Settings> {
                   onTap: () {},
                 ),
                 ListTile(
-                  title: Text("Delete account"),
+                  title: Text("Save Credit Card"),
                   trailing: Icon(
                     Icons.keyboard_arrow_right,
                     color: Colors.grey.shade400,
                   ),
                   onTap: () {},
+                ),
+                ListTile(
+                  title: Text("Delete account"),
+                  trailing: Icon(
+                    Icons.keyboard_arrow_right,
+                    color: Colors.grey.shade400,
+                  ),
+                  onTap: () => DialogHelper.deleteAccount(context),
                 ),
                 ListTile(
                   title: Text(
