@@ -4,12 +4,12 @@ import 'package:mystery_meal/ui/widgets/responsive_ui.dart';
 import 'package:mystery_meal/ui/widgets/textformfield.dart';
 import 'package:mystery_meal/ui/widgets/customappbar.dart';
 
-class RecoverPasswordScreen extends StatefulWidget {
+class RecoverPassword extends StatefulWidget {
   @override
-  _RecoverPasswordScreenState createState() => _RecoverPasswordScreenState();
+  _RecoverPasswordState createState() => _RecoverPasswordState();
 }
 
-class _RecoverPasswordScreenState extends State<RecoverPasswordScreen> {
+class _RecoverPasswordState extends State<RecoverPassword> {
 
   double _height;
   double _width;

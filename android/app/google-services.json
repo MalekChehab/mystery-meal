@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "250819892608",
+    "project_id": "mystery-meal-c4f49",
+    "storage_bucket": "mystery-meal-c4f49.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:250819892608:android:6735c4f0c2408221bd5d65",
+        "android_client_info": {
+          "package_name": "com.webzone.mystery_meal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "250819892608-2blerb1ejuvkusu9at6itlcrblso7nc4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtcakBvGMtSg1n6arC43-m7g8Tp-2UbMs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "250819892608-2blerb1ejuvkusu9at6itlcrblso7nc4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

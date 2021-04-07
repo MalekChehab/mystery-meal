@@ -4,22 +4,12 @@ import 'package:mystery_meal/ui/widgets/custom_shape.dart';
 import 'package:mystery_meal/ui/widgets/responsive_ui.dart';
 import 'package:mystery_meal/ui/widgets/textformfield.dart';
 
-
-class SignInPage extends StatelessWidget {
+class SignIn extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SignInScreen(),
-    );
-  }
+  _SignInState createState() => _SignInState();
 }
 
-class SignInScreen extends StatefulWidget {
-  @override
-  _SignInScreenState createState() => _SignInScreenState();
-}
-
-class _SignInScreenState extends State<SignInScreen> {
+class _SignInState extends State<SignIn> {
 
   double _height;
   double _width;
@@ -74,7 +64,6 @@ class _SignInScreenState extends State<SignInScreen> {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors:
-                  // [Colors.red[800], Colors.yellowAccent],
                   [const Color(0xffFE4180), const Color(0xffFEB04E)],
                 ),
               ),
@@ -90,24 +79,12 @@ class _SignInScreenState extends State<SignInScreen> {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors:
-                  // [Colors.yellow[800], Colors.red[500]],
                   [const Color(0xffFE4180), const Color(0xffFEB04E)]
                 ),
               ),
             ),
           ),
         ),
-        /*
-        Container(
-          alignment: Alignment.bottomCenter,
-          margin: EdgeInsets.only(top: _large? _height/30 : (_medium? _height/25 : _height/20)),
-          child: Image.asset(
-            'assets/images/login.png',
-            height: _height/3.5,
-            width: _width/3.5,
-          ),
-        ),
-        */
       ],
     );
   }
@@ -219,7 +196,7 @@ class _SignInScreenState extends State<SignInScreen> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       onPressed: () {
         print("Routing to your account");
-        Navigator.of(context).pushNamed(HOME_PAGE);
+        Navigator.of(context).pushNamed(HOME);
       },
       textColor: Colors.white,
       padding: EdgeInsets.all(0.0),
@@ -255,7 +232,8 @@ class _SignInScreenState extends State<SignInScreen> {
           ),
           GestureDetector(
             onTapDown: (TapDownDetails details) {
-              _showPopupMenu(details.globalPosition);
+              // _showPopupMenu(details.globalPosition);
+              Navigator.of(context).pushNamed(SIGN_UP);
             },
             child: Text(
               "Sign Up",
@@ -268,7 +246,7 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  void _showPopupMenu(Offset offset) async {
+  /*void _showPopupMenu(Offset offset) async {
     double left = offset.dx;
     double top = offset.dy;
     var selected = await showMenu(
@@ -292,5 +270,6 @@ class _SignInScreenState extends State<SignInScreen> {
       Navigator.of(context).pushNamed(SIGN_UP);
     else if(selected == 2)
       Navigator.of(context).pushNamed(NGO_SIGN_UP);
+   */
   }
-}
+// }
