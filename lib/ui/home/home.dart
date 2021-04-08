@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:mystery_meal/constants/constants.dart';
 import 'package:mystery_meal/ui/widgets/customnavigationbar.dart';
 
-class MyHomePage extends StatefulWidget {
+class Home extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _HomeState createState() => _HomeState();
 }
 
 var bannerItems = ["Midos", "SandwichWNoss", "Midos", "SandwichWNoss"];
@@ -16,7 +16,7 @@ var bannerImage = [
   "images/sandwichwnos.jpg"
 ];
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HomeState extends State<Home> {
   int _selectedItem = 0;
 
   @override
@@ -136,8 +136,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
       bottomNavigationBar: CustomBottomNavigationBar(
         iconList: [
-          IconButton(icon: Icon(Icons.home), onPressed: (){Navigator.of(context).pushNamed(HOME_PAGE);}),
-          IconButton(icon: Icon(Icons.favorite), onPressed: (){Navigator.of(context).pushNamed(STORE_DETAILS);}),
+          IconButton(icon: Icon(Icons.home), onPressed: (){Navigator.of(context).pushNamed(HOME);}),
+          IconButton(icon: Icon(Icons.favorite), onPressed: (){}),
           IconButton(icon: Icon(Icons.list_alt_outlined), onPressed: (){}),
           IconButton(icon: Icon(Icons.settings), onPressed: (){Navigator.of(context).pushNamed(SETTINGS);})
         ],

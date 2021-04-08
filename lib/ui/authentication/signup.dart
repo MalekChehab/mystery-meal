@@ -5,12 +5,12 @@ import 'package:mystery_meal/ui/widgets/customappbar.dart';
 import 'package:mystery_meal/ui/widgets/responsive_ui.dart';
 import 'package:mystery_meal/ui/widgets/textformfield.dart';
 
-class SignUpScreen extends StatefulWidget {
+class SignUp extends StatefulWidget {
   @override
-  _SignUpScreenState createState() => _SignUpScreenState();
+  _SignUpState createState() => _SignUpState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpState extends State<SignUp> {
   bool checkBoxValue = false;
   double _height;
   double _width;

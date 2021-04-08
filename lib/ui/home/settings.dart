@@ -143,7 +143,7 @@ class _SettingsState extends State<Settings> {
           IconButton(
               icon: Icon(Icons.home),
               onPressed: () {
-                Navigator.of(context).pushNamed(HOME_PAGE);
+                Navigator.of(context).pushNamed(HOME);
               }),
           IconButton(icon: Icon(Icons.favorite), onPressed: () {}),
           IconButton(icon: Icon(Icons.list_alt_outlined), onPressed: () {}),
@@ -158,7 +158,7 @@ class _SettingsState extends State<Settings> {
             _selectedItem = val;
           });
         },
-        defaultSelectedIndex: 3,
+        // defaultSelectedIndex: 3,
       ),
     );
   }
