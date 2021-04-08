@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mystery_meal/dialogs/dialogHelper.dart';
 import 'package:mystery_meal/ui/widgets/customnavigationbar.dart';
 import 'package:mystery_meal/constants/constants.dart';
 
@@ -24,7 +25,7 @@ class _SettingsState extends State<Settings> {
       body: Theme(
         data: Theme.of(context).copyWith(
           brightness: Brightness.dark,
-          primaryColor: Colors.purple,
+          primaryColor: PrimaryColor,
         ),
         child: DefaultTextStyle(
           style: TextStyle(
@@ -95,7 +96,8 @@ class _SettingsState extends State<Settings> {
                     Icons.keyboard_arrow_right,
                     color: Colors.grey.shade400,
                   ),
-                  onTap: () {},
+
+                  onTap: () => DialogHelper.changePassword(context),
                 ),
                 ListTile(
                   title: Text("Change phone number"),
@@ -103,7 +105,15 @@ class _SettingsState extends State<Settings> {
                     Icons.keyboard_arrow_right,
                     color: Colors.grey.shade400,
                   ),
-                  onTap: () {},
+                  onTap: () => DialogHelper.changeNumber(context),
+                ),
+                ListTile(
+                  title: Text("Save Credit Card"),
+                  trailing: Icon(
+                    Icons.keyboard_arrow_right,
+                    color: Colors.grey.shade400,
+                  ),
+                  onTap: () => DialogHelper.saveCreditCard(context),
                 ),
                 ListTile(
                   title: Text("Delete account"),
@@ -111,7 +121,7 @@ class _SettingsState extends State<Settings> {
                     Icons.keyboard_arrow_right,
                     color: Colors.grey.shade400,
                   ),
-                  onTap: () {},
+                  onTap: () => DialogHelper.deleteAccount(context),
                 ),
                 ListTile(
                   title: Text(

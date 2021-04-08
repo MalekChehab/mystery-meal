@@ -64,7 +64,9 @@ class _SignInState extends State<SignIn> {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors:
-                  [const Color(0xffFE4180), const Color(0xffFEB04E)],
+                  //[const Color(0xffFE4180), const Color(0xffFEB04E)],
+                  // [Colors.red[800], Colors.yellowAccent],
+                  [PrimaryColor, SecondaryColor],
                 ),
               ),
             ),
@@ -79,7 +81,8 @@ class _SignInState extends State<SignIn> {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors:
-                  [const Color(0xffFE4180), const Color(0xffFEB04E)]
+                  // [Colors.yellow[800], Colors.red[500]],
+                  [PrimaryColor, SecondaryColor]
                 ),
               ),
             ),
@@ -208,7 +211,7 @@ class _SignInState extends State<SignIn> {
           gradient: LinearGradient(
             colors:
             // <Color>[Colors.red[600], Colors.yellow[400]],
-            [const Color(0xffFEB04E), const Color(0xffFE4180)]
+            [SecondaryColor, PrimaryColor]
           ),
         ),
         padding: const EdgeInsets.all(10.0),
@@ -254,15 +257,15 @@ class _SignInState extends State<SignIn> {
       position: RelativeRect.fromLTRB(left-20, 575, 30, 30),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       elevation: 9.0,
-      color: const Color(0xffFEB04E),
+      color: SecondaryColor,
       items: [
         PopupMenuItem(
           value: 1,
-          child: Text("Costumer"),textStyle: new TextStyle(color: const Color(0xffFE4180),fontWeight:FontWeight.bold),
+          child: Text("Costumer"),textStyle: new TextStyle(color: PrimaryColor,fontWeight:FontWeight.bold),
         ),
         PopupMenuItem(
           value: 2,
-          child: Text("NGO"),textStyle: new TextStyle(color: const Color(0xffFE4180),fontWeight:FontWeight.bold),
+          child: Text("NGO"),textStyle: new TextStyle(color: PrimaryColor,fontWeight:FontWeight.bold),
         ),
       ],
     );
@@ -270,6 +273,5 @@ class _SignInState extends State<SignIn> {
       Navigator.of(context).pushNamed(SIGN_UP);
     else if(selected == 2)
       Navigator.of(context).pushNamed(NGO_SIGN_UP);
-   */
-  }
-// }
+  }*/
+}

@@ -64,7 +64,7 @@ class _SignUpState extends State<SignUp> {
                 gradient: LinearGradient(
                   colors:
                   // [Colors.red[600], Colors.yellow[700]],
-                  [const Color(0xffFE4180), const Color(0xffFEB04E)]
+                  [PrimaryColor, SecondaryColor]
                 ),
               ),
             ),
@@ -80,7 +80,7 @@ class _SignUpState extends State<SignUp> {
                 gradient: LinearGradient(
                   colors:
                   // [Colors.red[600], Colors.yellow[700]],
-                  [const Color(0xffFE4180), const Color(0xffFEB04E)]
+                  [PrimaryColor, SecondaryColor]
                 ),
               ),
             ),
@@ -237,7 +237,7 @@ class _SignUpState extends State<SignUp> {
           gradient: LinearGradient(
             colors:
             // <Color>[Colors.orange[200], Colors.pinkAccent],
-            [const Color(0xffFEB04E), const Color(0xffFE4180)]
+            [SecondaryColor, PrimaryColor]
           ),
         ),
         padding: const EdgeInsets.all(12.0),
