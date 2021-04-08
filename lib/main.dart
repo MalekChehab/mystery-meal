@@ -7,6 +7,7 @@ import 'package:mystery_meal/ui/authentication/signup.dart';
 import 'package:mystery_meal/ui/splashscreen.dart';
 import 'package:mystery_meal/ui/home/home.dart';
 import 'package:mystery_meal/ui/home/settings.dart';
+import 'package:mystery_meal/ui/storedetails.dart';
 
 void main() => runApp(MyApp());
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
     ]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primaryColor: const Color(0xffFE4180)),
+      // theme: ThemeData(primaryColor: const Color(0xffFE4180)),
       // title: "Login",
       //theme: ThemeData(primaryColor: const Color(0xffFE4180)),
       theme: ThemeData(

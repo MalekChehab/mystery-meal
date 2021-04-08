@@ -262,6 +262,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  smooth_star_rating:
+    dependency: "direct main"
+    description:
+      name: smooth_star_rating
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.1"
   source_map_stack_trace:
     dependency: transitive
     description:
@@ -276,13 +283,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.10.10-nullsafety.3"
-  smooth_star_rating:
-    dependency: "direct main"
-    description:
-      name: smooth_star_rating
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.1"
   source_span:
     dependency: transitive
     description:
