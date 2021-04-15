@@ -187,7 +187,7 @@ class _SignUpState extends State<SignUp> {
 
   Widget passwordTextFormField() {
     return PasswordTextField(
-      keyboardType: TextInputType.text,
+      keyboardType: TextInputType.visiblePassword,
       icon: Icons.lock,
       hint: "Password",
     );

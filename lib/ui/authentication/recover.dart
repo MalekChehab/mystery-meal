@@ -158,6 +158,7 @@ class _RecoverPasswordState extends State<RecoverPassword> {
       textEditingController: emailController,
       icon: Icons.email,
       hint: "Email",
+      // obscureText: false,
     );
   }
 

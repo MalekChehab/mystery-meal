@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mystery_meal/constants/constants.dart';
@@ -9,8 +10,11 @@ import 'package:mystery_meal/ui/home/home.dart';
 import 'package:mystery_meal/ui/home/settings.dart';
 import 'package:mystery_meal/ui/storedetails.dart';
 
-void main() => runApp(MyApp());
-
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

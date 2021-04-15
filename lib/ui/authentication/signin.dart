@@ -16,8 +16,8 @@ class _SignInState extends State<SignIn> {
   double _pixelRatio;
   bool _large;
   bool _medium;
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
   GlobalKey<FormState> _key = GlobalKey();
 
   @override
@@ -149,7 +149,7 @@ class _SignInState extends State<SignIn> {
   Widget emailTextFormField() {
     return CustomTextField(
       keyboardType: TextInputType.emailAddress,
-      textEditingController: emailController,
+      textEditingController: _emailController,
       icon: Icons.email,
       hint: "Email",
     );
@@ -157,8 +157,8 @@ class _SignInState extends State<SignIn> {
 
   Widget passwordTextFormField() {
     return PasswordTextField(
-      keyboardType: TextInputType.text,
-      textEditingController: passwordController,
+      keyboardType: TextInputType.visiblePassword,
+      textEditingController: _passwordController,
       icon: Icons.lock,
       hint: "Password",
     );
@@ -248,30 +248,4 @@ class _SignInState extends State<SignIn> {
       ),
     );
   }
-
-  /*void _showPopupMenu(Offset offset) async {
-    double left = offset.dx;
-    double top = offset.dy;
-    var selected = await showMenu(
-      context: context,
-      position: RelativeRect.fromLTRB(left-20, 575, 30, 30),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      elevation: 9.0,
-      color: SecondaryColor,
-      items: [
-        PopupMenuItem(
-          value: 1,
-          child: Text("Costumer"),textStyle: new TextStyle(color: PrimaryColor,fontWeight:FontWeight.bold),
-        ),
-        PopupMenuItem(
-          value: 2,
-          child: Text("NGO"),textStyle: new TextStyle(color: PrimaryColor,fontWeight:FontWeight.bold),
-        ),
-      ],
-    );
-    if(selected == 1)
-      Navigator.of(context).pushNamed(SIGN_UP);
-    else if(selected == 2)
-      Navigator.of(context).pushNamed(NGO_SIGN_UP);
-  }*/
 }
