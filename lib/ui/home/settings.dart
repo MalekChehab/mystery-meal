@@ -1,7 +1,10 @@
+import 'package:day_night_switch/day_night_switch.dart';
 import 'package:flutter/material.dart';
-import 'package:mystery_meal/dialogs/dialogHelper.dart';
+import 'package:mystery_meal/ui/widgets/dialogs/dialogHelper.dart';
 import 'package:mystery_meal/ui/widgets/customnavigationbar.dart';
 import 'package:mystery_meal/constants/constants.dart';
+import 'package:mystery_meal/ui/Provider/themeProvider.dart';
+import 'package:provider/provider.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -10,147 +13,116 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   int _selectedItem = 3;
-  static final String path = "lib/src/pages/settings/settings2.dart";
-  final TextStyle whiteText = TextStyle(
-    color: Colors.white,
-  );
-  final TextStyle greyTExt = TextStyle(
-    color: Colors.grey.shade400,
-  );
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Theme(
-        data: Theme.of(context).copyWith(
-          brightness: Brightness.dark,
-          primaryColor: PrimaryColor,
-        ),
-        child: DefaultTextStyle(
-          style: TextStyle(
-            color: Colors.white,
-          ),
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(32.0),
-            child: Column(
-              children: <Widget>[
-                const SizedBox(height: 30.0),
-                Row(
-                  children: <Widget>[
-                    Container(
-                      width: 60,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: new AssetImage('assets/images/d.jpg'),
-                          fit: BoxFit.cover,
-                        ),
-                        border: Border.all(
-                          color: Colors.white,
-                          width: 2.0,
-                        ),
+      body: Container(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(32.0),
+          child: Column(
+            children: <Widget>[
+              const SizedBox(height: 30.0),
+              Container(
+                    width: 150,
+                    height: 150,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: new AssetImage('assets/images/d.jpg'),
+                        fit: BoxFit.cover,
+                      ),
+                      border: Border.all(
+                        color: Colors.white,
+                        width: 2.0,
                       ),
                     ),
-                    const SizedBox(width: 10.0),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            "Mohammad Ghandour",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20.0,
-                                color: Colors.black87),
-                          ),
-                          Text(
-                            "Lebanon",
-                            style: TextStyle(
-                              color: Colors.grey.shade400,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                  ),
+                  const SizedBox(height: 20.0),
+              Text(
+                "Mohammad Ghandour ",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0,
                 ),
-                const SizedBox(height: 20.0),
-                ListTile(
-                  title: Text("Languages"),
-                  subtitle: Text(
-                    "English US",
-                    style: greyTExt,
-                  ),
-                  trailing: Icon(
-                    Icons.keyboard_arrow_right,
-                    color: Colors.grey.shade400,
-                  ),
-                  onTap: () {},
+              ),
+              const SizedBox(height: 20.0),
+              ListTile(
+                title: Text('Theme'),
+                contentPadding: const EdgeInsets.only(left: 16.0),
+                trailing: Transform.scale(
+                  scale: 0.34,
+                  child: DayNightSwitch(
+                      value: themeProvider.isDarkMode,
+                      onChanged: (value){
+                        final provider = Provider.of<ThemeProvider>(context, listen:false);
+                        provider.toggleTheme(value);
+                      }),
                 ),
-                ListTile(
-                  title: Text("Change password"),
-                  trailing: Icon(
-                    Icons.keyboard_arrow_right,
-                    color: Colors.grey.shade400,
-                  ),
-
-                  onTap: () => DialogHelper.changePassword(context),
-                ),
-                ListTile(
-                  title: Text("Change phone number"),
-                  trailing: Icon(
-                    Icons.keyboard_arrow_right,
-                    color: Colors.grey.shade400,
-                  ),
-                  onTap: () => DialogHelper.changeNumber(context),
-                ),
-                ListTile(
-                  title: Text("Save Credit Card"),
-                  trailing: Icon(
-                    Icons.keyboard_arrow_right,
-                    color: Colors.grey.shade400,
-                  ),
-                  onTap: () => DialogHelper.saveCreditCard(context),
-                ),
-                ListTile(
-                  title: Text("Delete account"),
-                  trailing: Icon(
-                    Icons.keyboard_arrow_right,
-                    color: Colors.grey.shade400,
-                  ),
-                  onTap: () => DialogHelper.deleteAccount(context),
-                ),
-                ListTile(
-                  title: Text(
-                    "Logout",
-                    style: TextStyle(color: Colors.red),
-                  ),
-                  trailing: Icon(
-                    Icons.warning_amber_rounded,
-                  ),
-                  onTap: () {},
-                ),
-              ],
-            ),
+              ),
+              ListTile(
+                title: Text('Notifications'),
+                trailing: Icon(Icons.keyboard_arrow_right,),
+                onTap: () => DialogHelper.notificationSetting(context),
+              ),
+              ListTile(
+                title: Text("Change password"),
+                trailing: Icon(Icons.keyboard_arrow_right,),
+                onTap: () => DialogHelper.changePassword(context),
+              ),
+              ListTile(
+                title: Text("Change phone number"),
+                trailing: Icon(Icons.keyboard_arrow_right,),
+                onTap: () => DialogHelper.changeNumber(context),
+              ),
+              ListTile(
+                title: Text("Save Credit Card"),
+                trailing: Icon(Icons.keyboard_arrow_right,),
+                onTap: () => DialogHelper.saveCreditCard(context),
+              ),
+              ListTile(
+                title: Text("Delete account"),
+                trailing: Icon(Icons.keyboard_arrow_right,),
+                onTap: () => DialogHelper.deleteAccount(context),
+              ),
+              ListTile(
+                title: Text("Logout", style: TextStyle(color: Colors.red),),
+                trailing: Icon(Icons.warning_amber_rounded, color: Colors.red,),
+                onTap: () {},
+              ),
+            ],
           ),
         ),
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
+        defaultSelectedIndex: 3,
         iconList: [
           IconButton(
               icon: Icon(Icons.home),
               onPressed: () {
                 Navigator.of(context).pushNamed(HOME);
               }),
-          IconButton(icon: Icon(Icons.favorite), onPressed: () {}),
-          IconButton(icon: Icon(Icons.list_alt_outlined), onPressed: () {}),
+          IconButton(
+              icon: Icon(Icons.favorite),
+              onPressed: () {
+
+              }),
+          IconButton(
+              icon: Icon(Icons.list_alt_outlined),
+              onPressed: () {
+
+              }),
           IconButton(
               icon: Icon(Icons.settings),
               onPressed: () {
-                Navigator.of(context).pushNamed(SETTINGS);
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => super.widget));
               })
         ],
         onChange: (val) {
@@ -158,7 +130,6 @@ class _SettingsState extends State<Settings> {
             _selectedItem = val;
           });
         },
-        // defaultSelectedIndex: 3,
       ),
     );
   }

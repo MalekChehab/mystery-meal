@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:mystery_meal/constants/constants.dart';
+import 'package:mystery_meal/ui/Provider/themeProvider.dart';
 import 'package:mystery_meal/ui/widgets/customnavigationbar.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -21,6 +23,9 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    // final text = Provider.of<ThemeProvider>(context).themeMode == ThemeMode.dark
+    //     ? 'DarkTheme'
+    //     : 'LightTheme';
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
 
@@ -101,7 +106,7 @@ class _HomeState extends State<Home> {
                       children: <Widget>[
                         IconButton(icon: Icon(Icons.fastfood), onPressed: (){}),
                         Text(
-                          "Mystery Meal",
+                          'MysteryMeal',
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
                         ),
@@ -135,18 +140,38 @@ class _HomeState extends State<Home> {
       ),
 
       bottomNavigationBar: CustomBottomNavigationBar(
+        defaultSelectedIndex: 0,
         iconList: [
-          IconButton(icon: Icon(Icons.home), onPressed: (){Navigator.of(context).pushNamed(HOME);}),
-          IconButton(icon: Icon(Icons.favorite), onPressed: (){}),
-          IconButton(icon: Icon(Icons.list_alt_outlined), onPressed: (){}),
-          IconButton(icon: Icon(Icons.settings), onPressed: (){Navigator.of(context).pushNamed(SETTINGS);})
+          IconButton(
+              icon: Icon(Icons.home),
+              onPressed: (){
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => super.widget));
+              }),
+          IconButton(
+              icon: Icon(Icons.favorite),
+              onPressed: (){
+
+              }),
+          IconButton(
+              icon: Icon(Icons.list_alt_outlined),
+              onPressed: (){
+
+              }),
+          IconButton(
+              icon: Icon(Icons.settings),
+              onPressed: (){
+                Navigator.of(context).pushNamed(SETTINGS);
+              })
         ],
         onChange: (val) {
           setState(() {
             _selectedItem = val;
           });
         },
-        defaultSelectedIndex: 0,
+        // defaultSelectedIndex: 0,
       ),
 
     );

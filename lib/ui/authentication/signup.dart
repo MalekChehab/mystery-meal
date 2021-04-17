@@ -179,7 +179,7 @@ class _SignUpState extends State<SignUp> {
 
   Widget phoneTextFormField() {
     return CustomTextField(
-      keyboardType: TextInputType.number,
+      keyboardType: TextInputType.phone,
       icon: Icons.phone_android,
       hint: "Mobile Number",
     );
@@ -200,7 +200,7 @@ class _SignUpState extends State<SignUp> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Checkbox(
-              activeColor: const Color(0xffFEB04E),
+              activeColor: Colors.teal,
               value: checkBoxValue,
               onChanged: (bool newValue) {
                 setState(() {

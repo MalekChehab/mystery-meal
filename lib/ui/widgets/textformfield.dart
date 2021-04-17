@@ -48,7 +48,6 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
         decoration: InputDecoration(
           prefixIcon: Icon(widget.icon, color: PrimaryColor, size: 20),
           hintText: widget.hint,
-          hintStyle: TextStyle(color: const Color(0xff000000)),
           suffixIcon: GestureDetector(
             onTap: () {
               setState(() {
@@ -107,7 +106,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
         decoration: InputDecoration(
           prefixIcon: Icon(widget.icon, color: PrimaryColor, size: 20),
           hintText: widget.hint,
-          hintStyle: TextStyle(color: const Color(0xff000000)),
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30.0),
               borderSide: BorderSide.none),

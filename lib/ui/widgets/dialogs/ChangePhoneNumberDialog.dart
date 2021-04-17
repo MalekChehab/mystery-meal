@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mystery_meal/constants/constants.dart';
+import 'package:mystery_meal/ui/widgets/textformfield.dart';
 
-class DeleteAccountDialog extends StatelessWidget {
+class ChangePhoneNumberDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -13,11 +14,11 @@ class DeleteAccountDialog extends StatelessWidget {
   }
 
   _buildChild(BuildContext context) => Container(
-    height: 400,
+    height: 370,
     decoration: BoxDecoration(
         color: PrimaryColor,
         shape: BoxShape.rectangle,
-        borderRadius: BorderRadius.all(Radius.circular(12))),
+        borderRadius: BorderRadius.all(Radius.circular(30))),
     child: SingleChildScrollView(
       child: Column(
         children: <Widget>[
@@ -26,8 +27,8 @@ class DeleteAccountDialog extends StatelessWidget {
               padding: const EdgeInsets.all(12.0),
               child: Image.asset(
                 'assets/images/mystery_meal.png',
-                height: 120,
-                width: 120,
+                height: 100,
+                width: 100,
               ),
             ),
             width: double.infinity,
@@ -35,39 +36,37 @@ class DeleteAccountDialog extends StatelessWidget {
                 color: Colors.white,
                 shape: BoxShape.rectangle,
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(12),
-                    topRight: Radius.circular(12))),
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30)
+                )
+            ),
           ),
           SizedBox(
             height: 24,
           ),
           Container(
-            child: Text("Please enter your password to proceed",style: TextStyle(fontSize: 17),),
-            padding: new EdgeInsets.all(10.0),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.only(right: 16, left: 16),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: "Password",
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.tealAccent),
-                  borderRadius: BorderRadius.all(Radius.circular(30)),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.tealAccent),
-                  borderRadius: BorderRadius.all(Radius.circular(30)),
-                ),
-              ),
+            padding: const EdgeInsets.only(right: 10, left: 10),
+            height: 55,
+            child: CustomTextField(
+              keyboardType: TextInputType.phone,
+              icon: Icons.phone_android,
+              hint: 'Old Phone Number',
             ),
           ),
           SizedBox(
-            height: 8,
+            height: 15,
           ),
-
+          Container(
+            padding: const EdgeInsets.only(right: 10, left: 10),
+            height: 55,
+            child: CustomTextField(
+              keyboardType: TextInputType.phone,
+              icon: Icons.phone_android,
+              hint: 'New Phone Number',
+            ),
+          ),
           SizedBox(
-            height: 24,
+            height: 20,
           ),
           Row(
             mainAxisSize: MainAxisSize.min,
@@ -83,12 +82,13 @@ class DeleteAccountDialog extends StatelessWidget {
                 width: 8,
               ),
               RaisedButton(
-                onPressed: () {
+                onPressed:() {
                   return Navigator.of(context).pop(true);
                 },
-                child: Text('Delete'),
+                child: Text('Change'),
                 color: Colors.white,
                 textColor: PrimaryColor,
+                shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
               )
             ],
           )
