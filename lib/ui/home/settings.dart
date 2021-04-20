@@ -24,24 +24,38 @@ class _SettingsState extends State<Settings> {
           child: Column(
             children: <Widget>[
               const SizedBox(height: 30.0),
-              Container(
-                    width: 150,
-                    height: 150,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: Colors.grey,
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: new AssetImage('assets/images/d.jpg'),
-                        fit: BoxFit.cover,
-                      ),
-                      border: Border.all(
-                        color: Colors.white,
-                        width: 2.0,
-                      ),
-                    ),
+              CircleAvatar(
+                radius: 70,
+                // backgroundColor: Colors.teal,
+                backgroundColor: Theme.of(context).primaryColor,
+                child: CircleAvatar(
+                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                  radius: 67,
+                  child: CircleAvatar(
+                    // backgroundColor: Theme.of(context).iconTheme.color,
+                    backgroundImage: AssetImage('assets/images/d.jpg'),
+                    radius: 63,
                   ),
-                  const SizedBox(height: 20.0),
+                ),
+              ),
+              // Container(
+              //   width: 150,
+              //   height: 150,
+              //   alignment: Alignment.center,
+              //   decoration: BoxDecoration(
+              //     color: Colors.grey,
+              //     shape: BoxShape.circle,
+              //     image: DecorationImage(
+              //       image: new AssetImage('assets/images/d.jpg'),
+              //       fit: BoxFit.cover,
+              //     ),
+              //     border: Border.all(
+              //       color: Colors.white,
+              //       width: 2.0,
+              //     ),
+              //   ),
+              // ),
+              const SizedBox(height: 20.0),
               Text(
                 "Mohammad Ghandour ",
                 textAlign: TextAlign.center,
@@ -104,7 +118,8 @@ class _SettingsState extends State<Settings> {
           IconButton(
               icon: Icon(Icons.home),
               onPressed: () {
-                Navigator.of(context).pushNamed(HOME);
+                // Navigator.of(context).pushNamed(HOME);
+                Navigator.of(context).pushNamedAndRemoveUntil(HOME, (route) => false);
               }),
           IconButton(
               icon: Icon(Icons.favorite),

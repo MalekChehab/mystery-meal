@@ -16,7 +16,7 @@ class CustomAppBar extends StatelessWidget {
           gradient: LinearGradient(
               colors:
               // [Colors.red[600], Colors.yellow[700]]
-              [PrimaryColor, SecondaryColor]
+              [Theme.of(context).primaryColor, SecondaryColor]
           ),
         ),
         child: Row(

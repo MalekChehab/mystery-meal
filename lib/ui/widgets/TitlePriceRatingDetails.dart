@@ -61,7 +61,7 @@ class TitlePriceRating extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 15),
         height: 66,
         width: 65,
-        color: PrimaryColor,
+        color: Theme.of(context).primaryColor,
 
         child: Text(
           "\$$price",

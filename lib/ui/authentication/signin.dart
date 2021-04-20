@@ -28,26 +28,28 @@ class _SignInState extends State<SignIn> {
     _large =  ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
     _medium =  ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
     return Material(
-      child: Container(
-        height: _height,
-        width: _width,
-        padding: EdgeInsets.only(bottom: 5),
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              clipShape(),
-              welcomeTextRow(),
-              signInTextRow(),
-              form(),
-              forgetPassTextRow(),
-              SizedBox(height: _height / 30),
-              signInButton(),
-              SizedBox(height: _height / 20),
-              signUpTextRow(),
-            ],
+      child:Scaffold(
+        body: Container(
+          height: _height,
+          width: _width,
+          padding: EdgeInsets.only(bottom: 5),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                clipShape(),
+                welcomeTextRow(),
+                signInTextRow(),
+                form(),
+                forgetPassTextRow(),
+                SizedBox(height: _height / 30),
+                signInButton(),
+                SizedBox(height: _height / 20),
+                signUpTextRow(),
+              ],
+            ),
           ),
         ),
-      ),
+      )
     );
   }
 
@@ -66,7 +68,7 @@ class _SignInState extends State<SignIn> {
                   colors:
                   //[const Color(0xffFE4180), const Color(0xffFEB04E)],
                   // [Colors.red[800], Colors.yellowAccent],
-                  [PrimaryColor, SecondaryColor],
+                  [Theme.of(context).primaryColor, SecondaryColor],
                 ),
               ),
             ),
@@ -82,7 +84,7 @@ class _SignInState extends State<SignIn> {
                 gradient: LinearGradient(
                   colors:
                   // [Colors.yellow[800], Colors.red[500]],
-                  [PrimaryColor, SecondaryColor]
+                  [Theme.of(context).primaryColor, SecondaryColor]
                 ),
               ),
             ),
@@ -200,6 +202,7 @@ class _SignInState extends State<SignIn> {
       onPressed: () {
         print("Routing to your account");
         Navigator.of(context).pushNamed(HOME);
+        // Navigator.of(context).pushReplacementNamed(HOME);
       },
       textColor: Colors.white,
       padding: EdgeInsets.all(0.0),
@@ -211,7 +214,7 @@ class _SignInState extends State<SignIn> {
           gradient: LinearGradient(
             colors:
             // <Color>[Colors.red[600], Colors.yellow[400]],
-            [SecondaryColor, PrimaryColor]
+            [SecondaryColor, Theme.of(context).primaryColor]
           ),
         ),
         padding: const EdgeInsets.all(10.0),

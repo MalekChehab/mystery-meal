@@ -11,7 +11,6 @@ class RecoverPassword extends StatefulWidget {
 }
 
 class _RecoverPasswordState extends State<RecoverPassword> {
-
   double _height;
   double _width;
   double _pixelRatio;
@@ -26,27 +25,29 @@ class _RecoverPasswordState extends State<RecoverPassword> {
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
     _pixelRatio = MediaQuery.of(context).devicePixelRatio;
-    _large =  ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
-    _medium =  ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
+    _large = ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
+    _medium = ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
     return Material(
-      child: Container(
-        height: _height,
-        width: _width,
-        padding: EdgeInsets.only(bottom: 5),
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Opacity(opacity: 0.88,child: CustomAppBar()),
-              clipShape(),
-              forgotTextRow(),
-              linkTextRow(),
-              form(),
-              SizedBox(height: _height / 30),
-              sendButton(),
-            ],
+        child: Scaffold(
+          body: Container(
+            height: _height,
+            width: _width,
+            padding: EdgeInsets.only(bottom: 5),
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Opacity(opacity: 0.88, child: CustomAppBar()),
+                  clipShape(),
+                  forgotTextRow(),
+                  linkTextRow(),
+                  form(),
+                  SizedBox(height: _height / 30),
+                  sendButton(),
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
+        )
     );
   }
 
@@ -59,11 +60,12 @@ class _RecoverPasswordState extends State<RecoverPassword> {
           child: ClipPath(
             clipper: CustomShapeClipper(),
             child: Container(
-              height:_large? _height/8 : (_medium? _height/7 : _height/6.5),
+              height: _large
+                  ? _height / 8
+                  : (_medium ? _height / 7 : _height / 6.5),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors:
-                  [PrimaryColor, SecondaryColor],
+                  colors: [Theme.of(context).primaryColor, SecondaryColor],
                 ),
               ),
             ),
@@ -74,12 +76,12 @@ class _RecoverPasswordState extends State<RecoverPassword> {
           child: ClipPath(
             clipper: CustomShapeClipper2(),
             child: Container(
-              height: _large? _height/12 : (_medium? _height/11 : _height/10),
+              height: _large
+                  ? _height / 12
+                  : (_medium ? _height / 11 : _height / 10),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors:
-                    [PrimaryColor, SecondaryColor]
-                ),
+                gradient:
+                    LinearGradient(colors: [Theme.of(context).primaryColor, SecondaryColor]),
               ),
             ),
           ),
@@ -108,7 +110,7 @@ class _RecoverPasswordState extends State<RecoverPassword> {
             "Forgot your password?",
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: _large? 30 : (_medium? 20 : 10),
+              fontSize: _large ? 30 : (_medium ? 20 : 10),
             ),
           ),
         ],
@@ -118,14 +120,14 @@ class _RecoverPasswordState extends State<RecoverPassword> {
 
   Widget linkTextRow() {
     return Container(
-      margin: EdgeInsets.only(left: _width / 15.0,top: 20),
+      margin: EdgeInsets.only(left: _width / 15.0, top: 20),
       child: Row(
         children: <Widget>[
           Text(
             "A link will be sent to your email \nin order to reset your password\n\nEnter your Email:",
             style: TextStyle(
               fontWeight: FontWeight.w200,
-              fontSize: _large? 10 : (_medium? 20 : 17),
+              fontSize: _large ? 10 : (_medium ? 20 : 17),
             ),
           ),
         ],
@@ -136,9 +138,7 @@ class _RecoverPasswordState extends State<RecoverPassword> {
   Widget form() {
     return Container(
       margin: EdgeInsets.only(
-          left: _width / 12.0,
-          right: _width / 12.0,
-          top: _height / 30.0),
+          left: _width / 12.0, right: _width / 12.0, top: _height / 30.0),
       child: Form(
           key: _key,
           child: Column(
@@ -146,9 +146,7 @@ class _RecoverPasswordState extends State<RecoverPassword> {
               children: <Widget>[
                 emailTextFormField(),
                 SizedBox(height: _height / 40.0),
-              ]
-          )
-      ),
+              ])),
     );
   }
 
@@ -166,24 +164,21 @@ class _RecoverPasswordState extends State<RecoverPassword> {
     return RaisedButton(
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-      onPressed: () {
-
-      },
+      onPressed: () {},
       textColor: Colors.white,
       padding: EdgeInsets.all(0.0),
       child: Container(
         alignment: Alignment.center,
-        width: _large? _width/4 : (_medium? _width/3.75: _width/3.5),
+        width: _large ? _width / 4 : (_medium ? _width / 3.75 : _width / 3.5),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
-          gradient: LinearGradient(
-              colors:
+          gradient: LinearGradient(colors:
               // <Color>[Colors.red[600], Colors.yellow[400]],
-              [PrimaryColor, SecondaryColor]
-          ),
+              [Theme.of(context).primaryColor, SecondaryColor]),
         ),
         padding: const EdgeInsets.all(10.0),
-        child: Text('SEND',style: TextStyle(fontSize: _large? 14: (_medium? 12: 10))),
+        child: Text('SEND',
+            style: TextStyle(fontSize: _large ? 14 : (_medium ? 12 : 10))),
       ),
     );
   }

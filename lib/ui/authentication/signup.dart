@@ -42,7 +42,8 @@ class _SignUpState extends State<SignUp> {
                 form(),
                 acceptTermsTextRow(),
                 SizedBox(height: _height/35,),
-                signUpButton()
+                signUpButton(),
+                // signInTextRow()
               ],
             ),
           ),
@@ -64,7 +65,7 @@ class _SignUpState extends State<SignUp> {
                 gradient: LinearGradient(
                   colors:
                   // [Colors.red[600], Colors.yellow[700]],
-                  [PrimaryColor, SecondaryColor]
+                  [Theme.of(context).primaryColor, SecondaryColor]
                 ),
               ),
             ),
@@ -80,7 +81,7 @@ class _SignUpState extends State<SignUp> {
                 gradient: LinearGradient(
                   colors:
                   // [Colors.red[600], Colors.yellow[700]],
-                  [PrimaryColor, SecondaryColor]
+                  [Theme.of(context).primaryColor, SecondaryColor]
                 ),
               ),
             ),
@@ -223,7 +224,6 @@ class _SignUpState extends State<SignUp> {
       onPressed: () {
         // if(Validator.validateMobile(phoneTextFormField().)==null{
         // }
-
         print("Routing to your account");
       },
       textColor: Colors.white,
@@ -237,7 +237,7 @@ class _SignUpState extends State<SignUp> {
           gradient: LinearGradient(
             colors:
             // <Color>[Colors.orange[200], Colors.pinkAccent],
-            [SecondaryColor, PrimaryColor]
+            [SecondaryColor, Theme.of(context).primaryColor]
           ),
         ),
         padding: const EdgeInsets.all(12.0),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mystery_meal/constants/constants.dart';
+// import 'package:mystery_meal/ui/Provider/sharedPreferences.dart';
 import 'package:mystery_meal/ui/Provider/themeProvider.dart';
 import 'package:mystery_meal/ui/authentication/signin.dart';
 import 'package:mystery_meal/ui/authentication/recover.dart';
@@ -10,8 +11,7 @@ import 'package:mystery_meal/ui/home/home.dart';
 import 'package:mystery_meal/ui/home/settings.dart';
 import 'package:mystery_meal/ui/storedetails.dart';
 import 'package:provider/provider.dart';
-
-// void main() => runApp(MyApp());
+// import 'package:shared_preferences/shared_preferences.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +19,6 @@ Future main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-
   runApp(MyApp());
 }
 

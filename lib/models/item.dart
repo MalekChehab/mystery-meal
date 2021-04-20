@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'category.dart';
+
 class Item {
   String name;
   double price;
-  String category;
+  Category category;
 
   //image
 
