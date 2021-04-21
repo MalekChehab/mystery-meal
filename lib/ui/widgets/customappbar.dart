@@ -23,10 +23,12 @@ class CustomAppBar extends StatelessWidget {
           children: <Widget>[
             IconButton(
                 icon: Icon(Icons.arrow_back,),
+                color: Theme.of(context).iconTheme.color,
                 onPressed: (){
                   print("pop");
                   Navigator.of(context).pop();
-                })
+                },
+            ),
           ],
         ),
       ),

@@ -18,7 +18,7 @@ class MyThemes{
     scaffoldBackgroundColor: Colors.grey.shade900,
     primaryColor: Colors.teal,
     colorScheme: ColorScheme.dark(),
-    iconTheme: IconThemeData(color: Colors.grey.shade500),
+    iconTheme: IconThemeData(color: Colors.grey.shade800),
     hintColor: Colors.grey.shade300,
     accentColor: Colors.grey.shade800,
     // cardColor: Colors.yellow,
