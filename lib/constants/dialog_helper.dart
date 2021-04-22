@@ -1,6 +1,6 @@
 import 'package:mystery_meal/ui/widgets/dialogs/change_phone_number_dialog.dart';
 import 'package:mystery_meal/ui/widgets/dialogs/delete_account_dialog.dart';
-import 'package:mystery_meal/ui/widgets/dialogs/chiange_password_dialog.dart';
+import 'package:mystery_meal/ui/widgets/dialogs/change_password_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:mystery_meal/ui/widgets/dialogs/save_creditcard_dialog.dart';
 import '../ui/widgets/dialogs/notification_dialog.dart';
