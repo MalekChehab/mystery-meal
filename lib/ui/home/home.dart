@@ -5,8 +5,8 @@ import 'package:flutter/rendering.dart';
 import 'dart:convert';
 import 'package:mystery_meal/constants/constants.dart';
 import 'package:mystery_meal/ui/Provider/themeProvider.dart';
-import 'package:mystery_meal/ui/widgets/customnavigationbar.dart';
-import 'package:mystery_meal/ui/widgets/homeView.dart';
+import 'package:mystery_meal/ui/widgets/custom_navigationbar.dart';
+import 'package:mystery_meal/ui/widgets/home_view.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {

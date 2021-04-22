@@ -1,7 +1,7 @@
 import 'package:day_night_switch/day_night_switch.dart';
 import 'package:flutter/material.dart';
-import 'package:mystery_meal/ui/widgets/dialogs/dialogHelper.dart';
-import 'package:mystery_meal/ui/widgets/customnavigationbar.dart';
+import 'package:mystery_meal/constants/dialog_helper.dart';
+import 'package:mystery_meal/ui/widgets/custom_navigationbar.dart';
 import 'package:mystery_meal/constants/constants.dart';
 import 'package:mystery_meal/ui/Provider/themeProvider.dart';
 import 'package:provider/provider.dart';

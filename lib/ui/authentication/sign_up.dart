@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mystery_meal/constants/constants.dart';
 import 'package:mystery_meal/ui/widgets/custom_shape.dart';
-import 'package:mystery_meal/ui/widgets/customappbar.dart';
+import 'package:mystery_meal/ui/widgets/custom_appbar.dart';
 import 'package:mystery_meal/ui/widgets/responsive_ui.dart';
-import 'package:mystery_meal/ui/widgets/textformfield.dart';
+import 'package:mystery_meal/ui/widgets/custom_textfield.dart';
 
 class SignUp extends StatefulWidget {
   @override

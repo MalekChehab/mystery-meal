@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mystery_meal/constants/constants.dart';
-import 'package:mystery_meal/ui/widgets/DetailsOrderButton.dart';
-import 'package:mystery_meal/ui/widgets/TitlePriceRatingDetails.dart';
-import 'package:mystery_meal/ui/widgets/ItemImage.dart';
+import 'package:mystery_meal/ui/widgets/details_order_button.dart';
+import 'package:mystery_meal/ui/widgets/title_price_rating_details.dart';
+import 'package:mystery_meal/ui/widgets/item_image.dart';
 import 'package:mystery_meal/main.dart';
 
 class Body extends StatelessWidget {

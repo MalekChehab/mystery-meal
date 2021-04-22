@@ -30,7 +30,7 @@ dependencies:
   smooth_star_rating: ^1.0.4
   provider: ^4.3.2+3
   day_night_switch: ^0.0.2+1
-#  shared_preferences: ^2.0.5
+  firebase_core:
 
 dev_dependencies:
   flutter_test:

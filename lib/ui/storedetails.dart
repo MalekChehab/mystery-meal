@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mystery_meal/constants/constants.dart';
 import 'package:mystery_meal/models/store.dart';
-import 'package:mystery_meal/ui/widgets/detailAppBar.dart';
-import 'package:mystery_meal/ui/widgets/detailsBody.dart';
+import 'package:mystery_meal/ui/widgets/details_appbar.dart';
+import 'package:mystery_meal/ui/widgets/details_body.dart';
 
 class DetailsScreen extends StatelessWidget {
   final Store store;
