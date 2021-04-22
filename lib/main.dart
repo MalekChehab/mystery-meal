@@ -9,6 +9,7 @@ import 'package:mystery_meal/ui/splashscreen.dart';
 import 'package:mystery_meal/ui/homepage.dart';
 import 'package:mystery_meal/ui/settings.dart';
 import 'package:mystery_meal/ui/storedetails.dart';
+import 'package:http/http.dart' as http;
 
 void main() => runApp(MyApp());
 
