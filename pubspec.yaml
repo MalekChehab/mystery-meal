@@ -31,6 +31,8 @@ dependencies:
   provider: ^4.3.2+3
   day_night_switch: ^0.0.2+1
   firebase_core:
+  firebase_auth:
+  loading_overlay: ^0.2.1
 
 dev_dependencies:
   flutter_test:

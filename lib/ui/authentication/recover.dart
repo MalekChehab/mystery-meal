@@ -86,17 +86,6 @@ class _RecoverPasswordState extends State<RecoverPassword> {
             ),
           ),
         ),
-        /*
-        Container(
-          alignment: Alignment.bottomCenter,
-          margin: EdgeInsets.only(top: _large? _height/30 : (_medium? _height/25 : _height/20)),
-          child: Image.asset(
-            'assets/images/login.png',
-            height: _height/3.5,
-            width: _width/3.5,
-          ),
-        ),
-        */
       ],
     );
   }
@@ -127,7 +116,7 @@ class _RecoverPasswordState extends State<RecoverPassword> {
             "A link will be sent to your email \nin order to reset your password\n\nEnter your Email:",
             style: TextStyle(
               fontWeight: FontWeight.w200,
-              fontSize: _large ? 10 : (_medium ? 20 : 17),
+              fontSize: _large ? 20 : (_medium ? 20 : 17),
             ),
           ),
         ],

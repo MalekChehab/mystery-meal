@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'dart:convert';
 import 'package:mystery_meal/constants/constants.dart';
 import 'package:mystery_meal/ui/Provider/themeProvider.dart';
+import 'package:mystery_meal/ui/widgets/custom_appbar.dart';
 import 'package:mystery_meal/ui/widgets/custom_navigationbar.dart';
 import 'package:mystery_meal/ui/widgets/home_view.dart';
 import 'package:provider/provider.dart';
@@ -23,13 +24,24 @@ var bannerImage = [
 ];
 
 class _HomeState extends State<Home> {
+  bool _preLoading = true;
   int _selectedItem = 0;
   bool _searching = false;
 
   @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(seconds: 1), () {
+      setState(() {
+        _preLoading = false;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var screenHeight = MediaQuery.of(context).size.height;
-    var screenWidth = MediaQuery.of(context).size.width;
+    var _height = MediaQuery.of(context).size.height;
+    var _width = MediaQuery.of(context).size.width;
 
     Future<List<Widget>> createList() async {
       List<Widget> items = new List<Widget>();
@@ -115,12 +127,11 @@ class _HomeState extends State<Home> {
         centerTitle: true,
         title: Center(
             child: SearchBar(
-              isSearching: _searching,
-            )
-        ),
+          isSearching: _searching,
+        )),
         actions: <Widget>[
           IconButton(
-            icon: !_searching? Icon(Icons.search) : Icon(Icons.clear_rounded),
+            icon: !_searching ? Icon(Icons.search) : Icon(Icons.clear_rounded),
             onPressed: () {
               setState(() {
                 _searching = !_searching;
@@ -132,57 +143,37 @@ class _HomeState extends State<Home> {
         elevation: 10,
         automaticallyImplyLeading: false,
         leading: new IconButton(
-            icon: new Icon(Icons.location_on_rounded), tooltip: "Location", onPressed: () {}),
+            icon: new Icon(Icons.location_on_rounded),
+            tooltip: "Location",
+            onPressed: () {}),
       ),
-      body: Container(
-        height: screenHeight,
-        width: screenWidth,
-        // children: <Widget>[
-        //   child: SafeArea(
-        //     child: SingleChildScrollView(
-        //       child: Column(
-        //         crossAxisAlignment: CrossAxisAlignment.center,
-        //         children: <Widget>[
-        //           Padding(
-        //             padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-        //             child: Row(
-        //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //               children: <Widget>[
-        //                 IconButton(icon: Icon(Icons.fastfood), onPressed: (){}),
-        //                 Text(
-        //                   'MysteryMeal',
-        //                   textAlign: TextAlign.center,
-        //                   style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
-        //                 ),
-        //                 IconButton(icon: Icon(Icons.search), onPressed: () {})
-        //               ],
-        //             ),
-        //           )
-        //         ],
-        //       ),
-        //     ),
-        //   ),
-        child: list(),
-
-        //   FutureBuilder(
-        //     initialData: <Widget>[Text("")],
-        //     future: createList(),
-        //     builder: (context, snapshot) {
-        //       if (snapshot.hasData) {
-        //         return Padding(
-        //           padding: EdgeInsets.all(8.0),
-        //           child: ListView(
-        //             primary: false,
-        //             shrinkWrap: true,
-        //             children: snapshot.data,
-        //           ),
-        //         );
-        //       } else {
-        //         return CircularProgressIndicator();
-        //       }
-        //     }
-        //   ),
-        // ],
+      body: Center(
+        child: _preLoading
+            ? CircularProgressIndicator()
+            : Container(
+                height: _height,
+                width: _width,
+                child: HomeView(),
+                //   FutureBuilder(
+                //     initialData: <Widget>[Text("")],
+                //     future: createList(),
+                //     builder: (context, snapshot) {
+                //       if (snapshot.hasData) {
+                //         return Padding(
+                //           padding: EdgeInsets.all(8.0),
+                //           child: ListView(
+                //             primary: false,
+                //             shrinkWrap: true,
+                //             children: snapshot.data,
+                //           ),
+                //         );
+                //       } else {
+                //         return CircularProgressIndicator();
+                //       }
+                //     }
+                //   ),
+                // ],
+              ),
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
         defaultSelectedIndex: 0,
@@ -209,13 +200,8 @@ class _HomeState extends State<Home> {
             _selectedItem = val;
           });
         },
-        // defaultSelectedIndex: 0,
       ),
     );
-  }
-
-  Widget list() {
-    return HomeView();
   }
 }
 

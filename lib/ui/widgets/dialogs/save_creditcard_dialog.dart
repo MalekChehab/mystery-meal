@@ -27,6 +27,27 @@ class SaveCreditCardDialog extends StatelessWidget {
       hint: 'Exp date',
     );
 
-    return CustomDialog(textBox1: cardHolder, primaryButtonText: "Save", textBox2: cardNumber, textBox3: cvc, textBox4: expireDate,);
+    return CustomDialog(textBox1: cardHolder, primaryButton: primaryButton(context), textBox2: cardNumber, textBox3: cvc, textBox4: expireDate,);
+  }
+
+  Widget primaryButton(BuildContext context){
+    return RaisedButton(
+      color: Theme.of(context).scaffoldBackgroundColor,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0)),
+      child: Text(
+        "Save",
+        maxLines: 1,
+        style: TextStyle(
+          fontSize: 15,
+          color: Theme.of(context).primaryColor,
+        ),
+      ),
+      onPressed: () {
+
+        print("Credit card saved");
+        Navigator.pop(context);
+      },
+    );
   }
 }

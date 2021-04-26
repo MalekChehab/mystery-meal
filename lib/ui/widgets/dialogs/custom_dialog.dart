@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 
 class CustomDialog extends StatelessWidget {
-  final Widget textBox1, textBox2, textBox3, textBox4;
+  final Widget textBox1, textBox2, textBox3, textBox4, primaryButton;
   final String text;
-  final String primaryButtonText;
-  final String destination;
+  bool showSecondaryButton;
 
   CustomDialog({
     this.textBox1,
-    @required this.primaryButtonText,
     this.text,
     this.textBox2,
     this.textBox3,
     this.textBox4,
-    this.destination,
+    this.primaryButton,
+    this.showSecondaryButton = true,
   });
 
   @override
@@ -52,44 +51,18 @@ class CustomDialog extends StatelessWidget {
               showText(context),
               SizedBox(height: 20),
               showTextBox(context, textBox1),
-              SizedBox(height: 10.0),
+              // SizedBox(height: 10.0),
               showTextBox(context, textBox2),
-              SizedBox(height: 10.0),
+              // SizedBox(height: 10.0),
               showTextBox(context, textBox3),
-              SizedBox(height: 10.0),
+              // SizedBox(height: 10.0),
               showTextBox(context, textBox4),
-              SizedBox(height: 5.0),
+              // SizedBox(height: 5.0),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  FlatButton(
-                    onPressed: () {
-                      return Navigator.of(context).pop(true);
-                    },
-                    child: Text(
-                      "Cancel",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Theme.of(context).scaffoldBackgroundColor),
-                    ),
-                  ),
-                  RaisedButton(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0)),
-                    child: Text(
-                      primaryButtonText,
-                      maxLines: 1,
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                    onPressed: () {
-                      buttonOnPressed(context);
-                    },
-                  ),
+                  showCancelButton(context),
+                  showPrimaryButton(context),
                 ],
               ),
               SizedBox(
@@ -102,17 +75,49 @@ class CustomDialog extends StatelessWidget {
     );
   }
 
-  buttonOnPressed(BuildContext context) {
-    return Navigator.of(context).pop(true);
-    //change in database
+  showPrimaryButton(BuildContext context){
+    if(this.primaryButton != null){
+      return this.primaryButton;
+    }else{
+      return SizedBox(height: 10);
+    }
+  }
+
+  showCancelButton(BuildContext context){
+    if(showSecondaryButton == true) {
+      return FlatButton(
+        onPressed: () {
+          return Navigator.of(context).pop(true);
+        },
+        child: Text(
+          "Cancel",
+          style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Theme
+                  .of(context)
+                  .scaffoldBackgroundColor),
+        ),
+      );
+    }else{
+      return SizedBox(height: 0,);
+    }
   }
 
   showTextBox(BuildContext context, Widget textBox) {
     if (textBox != null) {
-      return Container(
-          padding: const EdgeInsets.only(right: 10, left: 10),
-          height: 55,
-          child: textBox);
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.only(right: 10, left: 10),
+              height: 55,
+              child: textBox,
+            ),
+            SizedBox(height: 10,),
+          ],
+        ),
+      );
     } else {
       return SizedBox(
         height: 0,
@@ -126,8 +131,7 @@ class CustomDialog extends StatelessWidget {
         children: [
           SizedBox(height: 15),
           Container(
-            child: Text(
-              "Please enter your password to proceed",
+            child: Text(text,
               style: TextStyle(
                 fontSize: 19,
                 color: Theme.of(context).scaffoldBackgroundColor,
@@ -144,3 +148,5 @@ class CustomDialog extends StatelessWidget {
     }
   }
 }
+
+

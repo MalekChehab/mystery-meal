@@ -11,10 +11,12 @@ import 'package:mystery_meal/ui/home/home.dart';
 import 'package:mystery_meal/ui/home/settings.dart';
 import 'package:mystery_meal/ui/storedetails.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -28,6 +30,7 @@ class MyApp extends StatelessWidget {
       create: (context) => ThemeProvider(),
       builder: (context, _) {
         final themeProvider = Provider.of<ThemeProvider>(context);
+
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           themeMode: themeProvider.themeMode,

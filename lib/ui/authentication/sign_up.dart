@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:loading_overlay/loading_overlay.dart';
 import 'package:mystery_meal/constants/constants.dart';
 import 'package:mystery_meal/ui/widgets/custom_shape.dart';
 import 'package:mystery_meal/ui/widgets/custom_appbar.dart';
 import 'package:mystery_meal/ui/widgets/responsive_ui.dart';
 import 'package:mystery_meal/ui/widgets/custom_textfield.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -17,6 +19,15 @@ class _SignUpState extends State<SignUp> {
   double _pixelRatio;
   bool _large;
   bool _medium;
+  TextEditingController _firstNameController = TextEditingController();
+  TextEditingController _lastNameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  GlobalKey<FormState> _key = GlobalKey();
+  final auth = FirebaseAuth.instance;
+  bool _isButtonEnabled = false;
+  bool _isLoading = false;
 
 
   @override
@@ -34,18 +45,21 @@ class _SignUpState extends State<SignUp> {
           height: _height,
           width: _width,
           margin: EdgeInsets.only(bottom: 5),
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Opacity(opacity: 0.88,child: CustomAppBar()),
-                clipShape(),
-                form(),
-                acceptTermsTextRow(),
-                SizedBox(height: _height/35,),
-                signUpButton(),
-                // signInTextRow()
-              ],
+          child: LoadingOverlay(
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Opacity(opacity: 0.88,child: CustomAppBar()),
+                  clipShape(),
+                  form(),
+                  acceptTermsTextRow(),
+                  SizedBox(height: _height/35,),
+                  signUpButton(),
+                  // signInTextRow()
+                ],
+              ),
             ),
+            isLoading: _isLoading,
           ),
         ),
       ),
@@ -156,6 +170,7 @@ class _SignUpState extends State<SignUp> {
 
   Widget firstNameTextFormField() {
     return CustomTextField(
+      textEditingController: _firstNameController,
       keyboardType: TextInputType.text,
       icon: Icons.person,
       hint: "First Name",
@@ -164,6 +179,7 @@ class _SignUpState extends State<SignUp> {
 
   Widget lastNameTextFormField() {
     return CustomTextField(
+      textEditingController: _lastNameController,
       keyboardType: TextInputType.text,
       icon: Icons.person,
       hint: "Last Name",
@@ -172,6 +188,7 @@ class _SignUpState extends State<SignUp> {
 
   Widget emailTextFormField() {
     return CustomTextField(
+      textEditingController: _emailController,
       keyboardType: TextInputType.emailAddress,
       icon: Icons.email,
       hint: "Email",
@@ -180,6 +197,7 @@ class _SignUpState extends State<SignUp> {
 
   Widget phoneTextFormField() {
     return CustomTextField(
+      // textEditingController: _phoneController,
       keyboardType: TextInputType.phone,
       icon: Icons.phone_android,
       hint: "Mobile Number",
@@ -188,6 +206,7 @@ class _SignUpState extends State<SignUp> {
 
   Widget passwordTextFormField() {
     return PasswordTextField(
+      textEditingController: _passwordController,
       keyboardType: TextInputType.visiblePassword,
       icon: Icons.lock,
       hint: "Password",
@@ -206,6 +225,7 @@ class _SignUpState extends State<SignUp> {
               onChanged: (bool newValue) {
                 setState(() {
                   checkBoxValue = newValue;
+                  _isButtonEnabled = newValue;
                 });
               }),
           Text(
@@ -219,30 +239,40 @@ class _SignUpState extends State<SignUp> {
 
   Widget signUpButton() {
     return RaisedButton(
-      elevation: 0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-      onPressed: () {
-        // if(Validator.validateMobile(phoneTextFormField().)==null{
-        // }
-        print("Routing to your account");
-      },
-      textColor: Colors.white,
-      padding: EdgeInsets.all(0.0),
       child: Container(
         alignment: Alignment.center,
 //        height: _height / 20,
         width:_large? _width/4 : (_medium? _width/3.75: _width/3.5),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
-          gradient: LinearGradient(
-            colors:
-            // <Color>[Colors.orange[200], Colors.pinkAccent],
-            [SecondaryColor, Theme.of(context).primaryColor]
+          gradient: _isButtonEnabled? LinearGradient(
+              colors: [SecondaryColor, Theme.of(context).primaryColor]
+          )
+              :LinearGradient(
+            colors: [Colors.grey, Colors.grey],
           ),
         ),
         padding: const EdgeInsets.all(12.0),
         child: Text('SIGN UP', style: TextStyle(fontSize: _large? 14: (_medium? 12: 10)),),
       ),
+      elevation: 0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+      onPressed: _isButtonEnabled?() {
+        auth.createUserWithEmailAndPassword(email: _emailController.text, password: _passwordController.text).then((_){
+          auth.currentUser.updateProfile(displayName: (_firstNameController.text+" "+_lastNameController.text));
+          setState(() {
+            _isLoading = true;
+          });
+          Future.delayed(Duration(seconds: 1), () {
+            setState(() {
+              _isLoading = false;
+            });
+            Navigator.of(context).pushReplacementNamed(SIGN_IN);
+          });
+        });
+      }:null,
+      textColor: Colors.white,
+      padding: EdgeInsets.all(0.0),
     );
   }
 
