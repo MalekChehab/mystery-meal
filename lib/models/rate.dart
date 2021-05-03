@@ -5,7 +5,7 @@ import 'package:mystery_meal/models/customer.dart';
 class Rate {
   Customer customer;
   Store store;
-  int rating;
+  double rating;
 
   Rate({
     @required this.store,

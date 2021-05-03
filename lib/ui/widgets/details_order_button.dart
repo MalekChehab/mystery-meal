@@ -20,7 +20,7 @@ class OrderButton extends StatelessWidget {
       width: size.width * 0.8,
       // it will cover 80% of total width
       decoration: BoxDecoration(
-        color: PrimaryColor,
+        color: Theme.of(context).primaryColor,
 
 
         borderRadius: BorderRadius.circular(10),

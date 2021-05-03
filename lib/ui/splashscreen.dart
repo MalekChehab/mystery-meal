@@ -12,32 +12,32 @@ class SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   var _visible = true;
 
-  AnimationController animationController;
-  Animation<double> animation;
-
+  // AnimationController animationController;
+  // Animation<double> animation;
+  //
   startTime() async {
     var _duration = new Duration(seconds: 3);
     return new Timer(_duration, navigationPage);
   }
-
+  //
   void navigationPage() {
     Navigator.of(context).pushReplacementNamed(SIGN_IN);
   }
-
+  //
   @override
   void initState() {
-    super.initState();
-    animationController = new AnimationController(
-        vsync: this, duration: new Duration(seconds: 2));
-    animation =
-    new CurvedAnimation(parent: animationController, curve: Curves.easeOut);
-
-    animation.addListener(() => this.setState(() {}));
-    animationController.forward();
-
-    setState(() {
-      _visible = !_visible;
-    });
+  //   super.initState();
+  //   // animationController = new AnimationController(
+  //   //     vsync: this, duration: new Duration(seconds: 2));
+  //   // animation =
+  //   // new CurvedAnimation(parent: animationController, curve: Curves.easeOut);
+  //   //
+  //   // animation.addListener(() => this.setState(() {}));
+  //   // animationController.forward();
+  //
+  //   setState(() {
+  //     _visible = !_visible;
+  //   });
     startTime();
   }
 
@@ -63,8 +63,9 @@ class SplashScreenState extends State<SplashScreen>
             children: <Widget>[
               new Image.asset(
                 'assets/images/mystery_meal.png',
-                width: animation.value * 250,
-                height: animation.value * 250,
+                width: 250,height: 250,
+                // width: animation.value * 250,
+                // height: animation.value * 250,
               ),
             ],
           ),

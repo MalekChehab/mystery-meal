@@ -50,16 +50,16 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         width: MediaQuery.of(context).size.width / _iconList.length,
         decoration: index == _selectedIndex ? BoxDecoration(
           border: Border(
-              bottom: BorderSide(width: 5, color: PrimaryColor)),
+              bottom: BorderSide(width: 5, color: Theme.of(context).primaryColor)),
           gradient: LinearGradient(colors: [
-            PrimaryColor.withOpacity(0.5),
-            PrimaryColor.withOpacity(0.03),
+            Theme.of(context).primaryColor.withOpacity(0.5),
+            Theme.of(context).primaryColor.withOpacity(0.03),
           ],
               begin: Alignment.bottomCenter,
               end: Alignment.topCenter),
         )
             : BoxDecoration(),
-        child: IconButton(icon: icon1,color: index == _selectedIndex ? PrimaryColor : Colors.black),
+        child: IconButton(icon: icon1,color: Theme.of(context).primaryColor),
       ),
     );
   }

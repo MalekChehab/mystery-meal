@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mystery_meal/constants/constants.dart';
-import 'package:mystery_meal/ui/widgets/DetailsOrderButton.dart';
-import 'package:mystery_meal/ui/widgets/TitlePriceRatingDetails.dart';
-import 'package:mystery_meal/ui/widgets/ItemImage.dart';
+import 'package:mystery_meal/ui/widgets/details_order_button.dart';
+import 'package:mystery_meal/ui/widgets/title_price_rating_details.dart';
+import 'package:mystery_meal/ui/widgets/item_image.dart';
 import 'package:mystery_meal/main.dart';
 
 class Body extends StatelessWidget {
@@ -29,15 +29,16 @@ class ItemInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Container(
+    return Scaffold(
+    body:Container(
       padding: EdgeInsets.all(20),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.white,
+        // color: Colors.white,
       ),
       child: Column(
         children: <Widget>[
-          shopeName(name: "Midos"),
+          shopName(name: "Midos"),
           TitlePriceRating(
             name: "Cheese Burger",
             numOfReviews: 24,
@@ -60,16 +61,16 @@ class ItemInfo extends StatelessWidget {
           )
         ],
       ),
+      ),
     );
   }
 
-  Row shopeName({String name}) {
+  Row shopName({String name}) {
     return Row(
       children: <Widget>[
         Icon(
           Icons.location_on,
-          color: PrimaryColor,
-
+          // color: PrimaryColor,
         ),
         SizedBox(width: 10),
         Text(name),
