@@ -12,18 +12,6 @@ Widget image() {
 
 class HomeView extends StatelessWidget {
   Store store;
-  final List<StoreCard> storesList2 = [
-    StoreCard("Kalaa", [Category("Fast Food"), Category("Burger")],
-        Image(image: AssetImage("assets/images/midos.png")), 4.4),
-    StoreCard("Sousa", [Category("Fast Food"), Category("BBQ")],
-        Image(image: AssetImage("assets/images/midos.png")), 4.5),
-    StoreCard("Pizza Hut", [Category("Pizza")],
-        Image(image: AssetImage("assets/images/midos.png")), 4.3),
-    StoreCard("Sandwich w Nos", [Category("Fast Food")],
-        Image(image: AssetImage("assets/images/midos.png")), 4.4),
-    StoreCard("Alturky", [Category("Shawarma")],
-        Image(image: AssetImage("assets/images/midos.png")), 4.4),
-  ];
 
   final List<StoreCard> storesList = [
     StoreCard("Kalaa", [Category("Fast Food"), Category("Burger")],

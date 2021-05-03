@@ -1,4 +1,5 @@
 import 'package:mystery_meal/ui/widgets/dialogs/change_phone_number_dialog.dart';
+import 'package:mystery_meal/ui/widgets/dialogs/change_username_dialog.dart';
 import 'package:mystery_meal/ui/widgets/dialogs/delete_account_dialog.dart';
 import 'package:mystery_meal/ui/widgets/dialogs/change_password_dialog.dart';
 import 'package:flutter/material.dart';
@@ -15,4 +16,5 @@ class DialogHelper {
   static notificationSetting(context) => showDialog(context: context, builder: (context) => NotificationDialog());
   static logOut(context) => showDialog(context: context, builder: (context) => LogOutDialog());
   static goodBye(context) => showDialog(context: context, builder: (context) => GoodByeDialog());
+  static changeUserName(context) => showDialog(context: context, builder: (context) => ChangeUserNameDialog());
 }

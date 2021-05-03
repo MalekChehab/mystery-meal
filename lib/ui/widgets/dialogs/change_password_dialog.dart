@@ -54,6 +54,9 @@ class PasswordChangeDialog extends StatelessWidget {
   onPressed(BuildContext context) {
     var credentials = EmailAuthProvider.credential(email: user.email, password: _oldPasswordController.text);
     user.reauthenticateWithCredential(credentials).then((_) {
+      final snackBar = SnackBar(
+          content: Text('Password saved'), backgroundColor: Theme.of(context).primaryColor,);
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
       user.updatePassword(_newPasswordController.text);
       Navigator.pop(context);
       print("Password Changed");

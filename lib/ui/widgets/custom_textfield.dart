@@ -71,6 +71,7 @@ class CustomTextField extends StatefulWidget {
   final TextInputType keyboardType;
   final IconData icon;
   final IconButton suffixIcon;
+  final FormFieldValidator validator;
 
   CustomTextField(
       {this.hint,
@@ -78,6 +79,7 @@ class CustomTextField extends StatefulWidget {
         this.keyboardType,
         this.icon,
         this.suffixIcon,
+        this.validator,
       });
 
   @override
@@ -100,6 +102,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       borderRadius: BorderRadius.circular(30.0),
       elevation: large? 12 : (medium? 10 : 8),
       child: TextFormField(
+        validator: widget.validator,
         controller: widget.textEditingController,
         keyboardType: widget.keyboardType,
         cursorColor: Colors.red[500],

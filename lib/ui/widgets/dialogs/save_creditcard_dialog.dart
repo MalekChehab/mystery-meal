@@ -44,7 +44,9 @@ class SaveCreditCardDialog extends StatelessWidget {
         ),
       ),
       onPressed: () {
-
+        final snackBar = SnackBar(
+            content: Text('Credit card saved'), backgroundColor: Theme.of(context).primaryColor,);
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
         print("Credit card saved");
         Navigator.pop(context);
       },

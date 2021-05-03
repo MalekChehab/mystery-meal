@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:mystery_meal/constants/constants.dart';
 import 'package:mystery_meal/ui/widgets/custom_shape.dart';
@@ -28,16 +31,60 @@ class _SignUpState extends State<SignUp> {
   final auth = FirebaseAuth.instance;
   bool _isButtonEnabled = false;
   bool _isLoading = false;
+  File _image;
 
+  _imgFromCamera() async {
+    File image = await ImagePicker.pickImage(
+        source: ImageSource.camera, imageQuality: 50);
+    setState(() {
+      _image = image;
+    });
+  }
+
+  _imgFromGallery() async {
+    File image = await ImagePicker.pickImage(
+        source: ImageSource.gallery, imageQuality: 50);
+    setState(() {
+      _image = image;
+    });
+  }
+
+  void _showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+              child: Container(
+                  child: new Wrap(
+            children: [
+              new ListTile(
+                leading: new Icon(Icons.photo_library_rounded),
+                title: new Text('Gallery'),
+                onTap: () {
+                  _imgFromGallery();
+                  Navigator.pop(context);
+                },
+              ),
+              new ListTile(
+                leading: new Icon(Icons.photo_camera_rounded),
+                title: new Text('Camera'),
+                onTap: () {
+                  _imgFromCamera();
+                  Navigator.pop(context);
+                },
+              )
+            ],
+          )));
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
-
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
     _pixelRatio = MediaQuery.of(context).devicePixelRatio;
-    _large =  ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
-    _medium =  ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
+    _large = ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
+    _medium = ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
 
     return Material(
       child: Scaffold(
@@ -49,11 +96,13 @@ class _SignUpState extends State<SignUp> {
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  Opacity(opacity: 0.88,child: CustomAppBar()),
+                  Opacity(opacity: 0.88, child: CustomAppBar()),
                   clipShape(),
                   form(),
                   acceptTermsTextRow(),
-                  SizedBox(height: _height/35,),
+                  SizedBox(
+                    height: _height / 35,
+                  ),
                   signUpButton(),
                   // signInTextRow()
                 ],
@@ -74,13 +123,12 @@ class _SignUpState extends State<SignUp> {
           child: ClipPath(
             clipper: CustomShapeClipper(),
             child: Container(
-              height: _large? _height/8 : (_medium? _height/7 : _height/6.5),
+              height: _large
+                  ? _height / 8
+                  : (_medium ? _height / 7 : _height / 6.5),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors:
-                  // [Colors.red[600], Colors.yellow[700]],
-                  [Theme.of(context).primaryColor, SecondaryColor]
-                ),
+                gradient: LinearGradient(colors:
+                    [Theme.of(context).primaryColor, SecondaryColor]),
               ),
             ),
           ),
@@ -90,13 +138,12 @@ class _SignUpState extends State<SignUp> {
           child: ClipPath(
             clipper: CustomShapeClipper2(),
             child: Container(
-              height: _large? _height/12 : (_medium? _height/11 : _height/10),
+              height: _large
+                  ? _height / 12
+                  : (_medium ? _height / 11 : _height / 10),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors:
-                  // [Colors.red[600], Colors.yellow[700]],
-                  [Theme.of(context).primaryColor, SecondaryColor]
-                ),
+                    colors: [Theme.of(context).primaryColor, SecondaryColor]),
               ),
             ),
           ),
@@ -112,32 +159,51 @@ class _SignUpState extends State<SignUp> {
                   offset: Offset(1.0, 10.0),
                   blurRadius: 20.0),
             ],
-            color: Colors.white,
+            color: Theme.of(context).scaffoldBackgroundColor,
             shape: BoxShape.circle,
           ),
-          child: GestureDetector(
-              onTap: (){
-                print('Adding photo');
-              },
-              child: Icon(Icons.add_a_photo, size: _large? 40: (_medium? 33: 31),color: Colors.orange[200],)),
+          child: CircleAvatar(
+            radius: 55,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            child: _image != null
+                ? ClipRRect(
+                    borderRadius: BorderRadius.circular(150),
+                    child: Image.file(
+                      _image,
+                      width: 190,
+                      height: 190,
+                      fit: BoxFit.fitWidth,
+                    ),
+                  )
+                : Icon(
+                    Icons.photo_camera_rounded,
+                    size: _large ? 40 : (_medium ? 33 : 31),
+                    color: Theme.of(context).primaryColor,
+                  ),
+          ),
         ),
-
         Positioned(
-          top: _height/8,
-          left: _width/1.75,
+          top: _height / 8,
+          left: _width / 1.75,
           child: Container(
             alignment: Alignment.center,
-            height: _height/23,
+            height: _height / 23,
             padding: EdgeInsets.all(5),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color:  Colors.orange[100],
+              color: Theme.of(context).primaryColor,
             ),
             child: GestureDetector(
-                onTap: (){
+                onTap: () {
+                  _showPicker(context);
                   print('Adding photo');
                 },
-                child: Icon(Icons.add_a_photo, size: _large? 22: (_medium? 15: 13),)),
+                child: Icon(
+                  Icons.add_a_photo,
+                  size: _large ? 22 : (_medium ? 15 : 13),
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                ),
+            ),
           ),
         ),
       ],
@@ -147,16 +213,14 @@ class _SignUpState extends State<SignUp> {
   Widget form() {
     return Container(
       margin: EdgeInsets.only(
-          left:_width/ 12.0,
-          right: _width / 12.0,
-          top: _height / 20.0),
+          left: _width / 12.0, right: _width / 12.0, top: _height / 20.0),
       child: Form(
         child: Column(
           children: <Widget>[
             firstNameTextFormField(),
             SizedBox(height: _height / 60.0),
             lastNameTextFormField(),
-            SizedBox(height: _height/ 60.0),
+            SizedBox(height: _height / 60.0),
             emailTextFormField(),
             SizedBox(height: _height / 60.0),
             phoneTextFormField(),
@@ -230,7 +294,9 @@ class _SignUpState extends State<SignUp> {
               }),
           Text(
             "I accept all terms and conditions",
-            style: TextStyle(fontWeight: FontWeight.w400, fontSize: _large? 12: (_medium? 11: 10)),
+            style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: _large ? 12 : (_medium ? 11 : 10)),
           ),
         ],
       ),
@@ -242,35 +308,47 @@ class _SignUpState extends State<SignUp> {
       child: Container(
         alignment: Alignment.center,
 //        height: _height / 20,
-        width:_large? _width/4 : (_medium? _width/3.75: _width/3.5),
+        width: _large ? _width / 4 : (_medium ? _width / 3.75 : _width / 3.5),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
-          gradient: _isButtonEnabled? LinearGradient(
-              colors: [SecondaryColor, Theme.of(context).primaryColor]
-          )
-              :LinearGradient(
-            colors: [Colors.grey, Colors.grey],
-          ),
+          gradient: _isButtonEnabled
+              ? LinearGradient(
+                  colors: [SecondaryColor, Theme.of(context).primaryColor])
+              : LinearGradient(
+                  colors: [Colors.grey, Colors.grey],
+                ),
         ),
         padding: const EdgeInsets.all(12.0),
-        child: Text('SIGN UP', style: TextStyle(fontSize: _large? 14: (_medium? 12: 10)),),
+        child: Text(
+          'SIGN UP',
+          style: TextStyle(fontSize: _large ? 14 : (_medium ? 12 : 10)),
+        ),
       ),
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-      onPressed: _isButtonEnabled?() {
-        auth.createUserWithEmailAndPassword(email: _emailController.text, password: _passwordController.text).then((_){
-          auth.currentUser.updateProfile(displayName: (_firstNameController.text+" "+_lastNameController.text));
-          setState(() {
-            _isLoading = true;
-          });
-          Future.delayed(Duration(seconds: 1), () {
-            setState(() {
-              _isLoading = false;
-            });
-            Navigator.of(context).pushReplacementNamed(SIGN_IN);
-          });
-        });
-      }:null,
+      onPressed: _isButtonEnabled
+          ? () {
+              auth
+                  .createUserWithEmailAndPassword(
+                      email: _emailController.text,
+                      password: _passwordController.text)
+                  .then((_) {
+                auth.currentUser.updateProfile(
+                    displayName: (_firstNameController.text +
+                        " " +
+                        _lastNameController.text));
+                setState(() {
+                  _isLoading = true;
+                });
+                Future.delayed(Duration(seconds: 1), () {
+                  setState(() {
+                    _isLoading = false;
+                  });
+                  Navigator.of(context).pushReplacementNamed(SIGN_IN);
+                });
+              });
+            }
+          : null,
       textColor: Colors.white,
       padding: EdgeInsets.all(0.0),
     );
@@ -297,12 +375,13 @@ class _SignUpState extends State<SignUp> {
             child: Text(
               "Sign in",
               style: TextStyle(
-                  fontWeight: FontWeight.w800, color: Colors.orange[200], fontSize: 19),
+                  fontWeight: FontWeight.w800,
+                  color: Colors.orange[200],
+                  fontSize: 19),
             ),
           )
         ],
       ),
     );
   }
-
 }

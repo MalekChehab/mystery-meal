@@ -4,6 +4,7 @@ class CustomDialog extends StatelessWidget {
   final Widget textBox1, textBox2, textBox3, textBox4, primaryButton;
   final String text;
   bool showSecondaryButton;
+  GlobalKey key;
 
   CustomDialog({
     this.textBox1,
@@ -13,6 +14,7 @@ class CustomDialog extends StatelessWidget {
     this.textBox4,
     this.primaryButton,
     this.showSecondaryButton = true,
+    this.key,
   });
 
   @override
@@ -50,23 +52,26 @@ class CustomDialog extends StatelessWidget {
               ),
               showText(context),
               SizedBox(height: 20),
-              showTextBox(context, textBox1),
-              // SizedBox(height: 10.0),
-              showTextBox(context, textBox2),
-              // SizedBox(height: 10.0),
-              showTextBox(context, textBox3),
-              // SizedBox(height: 10.0),
-              showTextBox(context, textBox4),
-              // SizedBox(height: 5.0),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  showCancelButton(context),
-                  showPrimaryButton(context),
-                ],
-              ),
-              SizedBox(
-                height: 10,
+              Form(
+                key: this.key,
+                child: Column(
+                  children: [
+                    showTextBox(context, textBox1),
+                    showTextBox(context, textBox2),
+                    showTextBox(context, textBox3),
+                    showTextBox(context, textBox4),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        showCancelButton(context),
+                        showPrimaryButton(context),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -75,16 +80,16 @@ class CustomDialog extends StatelessWidget {
     );
   }
 
-  showPrimaryButton(BuildContext context){
-    if(this.primaryButton != null){
+  showPrimaryButton(BuildContext context) {
+    if (this.primaryButton != null) {
       return this.primaryButton;
-    }else{
+    } else {
       return SizedBox(height: 10);
     }
   }
 
-  showCancelButton(BuildContext context){
-    if(showSecondaryButton == true) {
+  showCancelButton(BuildContext context) {
+    if (showSecondaryButton == true) {
       return FlatButton(
         onPressed: () {
           return Navigator.of(context).pop(true);
@@ -94,13 +99,13 @@ class CustomDialog extends StatelessWidget {
           style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
-              color: Theme
-                  .of(context)
-                  .scaffoldBackgroundColor),
+              color: Theme.of(context).scaffoldBackgroundColor),
         ),
       );
-    }else{
-      return SizedBox(height: 0,);
+    } else {
+      return SizedBox(
+        height: 0,
+      );
     }
   }
 
@@ -114,7 +119,9 @@ class CustomDialog extends StatelessWidget {
               height: 55,
               child: textBox,
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
           ],
         ),
       );
@@ -131,7 +138,8 @@ class CustomDialog extends StatelessWidget {
         children: [
           SizedBox(height: 15),
           Container(
-            child: Text(text,
+            child: Text(
+              text,
               style: TextStyle(
                 fontSize: 19,
                 color: Theme.of(context).scaffoldBackgroundColor,
@@ -148,5 +156,3 @@ class CustomDialog extends StatelessWidget {
     }
   }
 }
-
-
