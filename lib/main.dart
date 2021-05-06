@@ -11,6 +11,7 @@ import 'package:mystery_meal/ui/home/home.dart';
 import 'package:mystery_meal/ui/home/settings.dart';
 import 'package:mystery_meal/ui/home/favorites.dart';
 import 'package:mystery_meal/ui/storedetails.dart';
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
