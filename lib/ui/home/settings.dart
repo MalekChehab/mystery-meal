@@ -220,7 +220,7 @@ class _SettingsState extends State<Settings> {
         opacity: 0.3,
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
-        defaultSelectedIndex: 3,
+        defaultSelectedIndex: 2,
         iconList: [
           IconButton(
               icon: Icon(Icons.home),
@@ -229,16 +229,19 @@ class _SettingsState extends State<Settings> {
                 Navigator.of(context)
                     .pushNamedAndRemoveUntil(HOME, (route) => false);
               }),
-          IconButton(icon: Icon(Icons.favorite), onPressed: () {}),
-          IconButton(icon: Icon(Icons.list_alt_outlined), onPressed: () {}),
           IconButton(
-              icon: Icon(Icons.settings),
+              icon: Icon(Icons.list_alt_rounded),
               onPressed: () {
-                Navigator.pushReplacement(
-                    context,
+                Navigator.of(context).pushNamed(FAVORITES);
+              }),
+          // IconButton(icon: Icon(Icons.list_alt_outlined), onPressed: () {}),
+          IconButton(
+              icon: Icon(Icons.settings_rounded),
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                         builder: (BuildContext context) => super.widget));
-              })
+              }),
         ],
         onChange: (val) {
           setState(() {

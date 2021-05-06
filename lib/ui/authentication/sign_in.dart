@@ -247,7 +247,6 @@ class _SignInState extends State<SignIn> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
           gradient: LinearGradient(colors:
-              // <Color>[Colors.red[600], Colors.yellow[400]],
               [SecondaryColor, Theme.of(context).primaryColor]),
         ),
         padding: const EdgeInsets.all(10.0),

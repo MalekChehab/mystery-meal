@@ -36,18 +36,18 @@ class CustomAppBar extends StatelessWidget {
 }
 
 class HomeCustomAppBar extends StatefulWidget {
-  final bool searching;
+  // final bool searching;
 
-  HomeCustomAppBar(@required this.searching);
+  // HomeCustomAppBar(@required this.searching);
   @override
   _HomeCustomAppBarState createState() => _HomeCustomAppBarState();
 }
 
 class _HomeCustomAppBarState extends State<HomeCustomAppBar> {
-  bool _searching;
+  bool _searching = false;
   @override
   Widget build(BuildContext context) {
-    _searching = widget.searching;
+    // _searching = widget.searching;
     return Material(
       child: AppBar(
         centerTitle: true,
@@ -70,7 +70,10 @@ class _HomeCustomAppBarState extends State<HomeCustomAppBar> {
         elevation: 10,
         automaticallyImplyLeading: false,
         leading: new IconButton(
-            icon: new Icon(Icons.location_on_rounded), tooltip: "Location", onPressed: () {}),
+            icon: new Icon(Icons.location_on_rounded),
+            tooltip: "Location",
+            onPressed: () {}
+            ),
       ),
     );
   }

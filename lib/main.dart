@@ -9,6 +9,7 @@ import 'package:mystery_meal/ui/authentication/sign_up.dart';
 import 'package:mystery_meal/ui/splashscreen.dart';
 import 'package:mystery_meal/ui/home/home.dart';
 import 'package:mystery_meal/ui/home/settings.dart';
+import 'package:mystery_meal/ui/home/favorites.dart';
 import 'package:mystery_meal/ui/storedetails.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
             HOME: (BuildContext context) => Home(),
             SETTINGS: (BuildContext context) => Settings(),
             STORE_DETAILS: (BuildContext context) => DetailsScreen(),
+            FAVORITES: (BuildContext context) => Favorites(),
           },
           initialRoute: SPLASH_SCREEN,
         );
