@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_overlay/loading_overlay.dart';
@@ -8,7 +7,9 @@ import 'package:mystery_meal/ui/widgets/custom_shape.dart';
 import 'package:mystery_meal/ui/widgets/custom_appbar.dart';
 import 'package:mystery_meal/ui/widgets/responsive_ui.dart';
 import 'package:mystery_meal/ui/widgets/custom_textfield.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class SignUp extends StatefulWidget {
   @override
@@ -28,10 +29,64 @@ class _SignUpState extends State<SignUp> {
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   GlobalKey<FormState> _key = GlobalKey();
-  final auth = FirebaseAuth.instance;
+  // final auth = FirebaseAuth.instance;
   bool _isButtonEnabled = false;
   bool _isLoading = false;
   File _image;
+
+
+  Future userRegistration() async{
+
+    // Showing CircularProgressIndicator.
+    setState(() {
+      _isLoading = true ;
+    });
+
+    // Getting value from Controller
+    String firstName = _firstNameController.text;
+    String lastName = _lastNameController.text;
+    String username = _phoneController.text;
+    String email = _emailController.text;
+    String password = _passwordController.text;
+
+    // SERVER API URL
+    var url = 'https://mystery-meal.000webhostapp.com/register.php';
+
+    // Store all data with Param Name.
+    var data = {"firstname": firstName, 'lastname': lastName, 'username': username, 'email': email, 'password' : password};
+
+    // Starting Web API Call.
+    var response = await http.post(url, body: {"firstname": "$firstName", "lastName": "$lastName", "username": "$username", "email": "$email", "password": "$password"});
+
+    // Getting Server response into variable.
+    var message = jsonDecode(response.body);
+
+    // If Web call Success than Hide the CircularProgressIndicator.
+    if(response.statusCode == 200){
+      setState(() {
+        _isLoading = false;
+      });
+    }
+
+    // Showing Alert Dialog with Response JSON Message.
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text(message),
+          actions: <Widget>[
+            FlatButton(
+              child: new Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+
+  }
 
   _imgFromCamera() async {
     File image = await ImagePicker.pickImage(
@@ -262,9 +317,9 @@ class _SignUpState extends State<SignUp> {
   Widget phoneTextFormField() {
     return CustomTextField(
       // textEditingController: _phoneController,
-      keyboardType: TextInputType.phone,
-      icon: Icons.phone_android,
-      hint: "Mobile Number",
+      keyboardType: TextInputType.text,
+      icon: Icons.person_outline_rounded,
+      hint: "Username",
     );
   }
 
@@ -328,25 +383,31 @@ class _SignUpState extends State<SignUp> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       onPressed: _isButtonEnabled
           ? () {
-              auth
-                  .createUserWithEmailAndPassword(
-                      email: _emailController.text,
-                      password: _passwordController.text)
-                  .then((_) {
-                auth.currentUser.updateProfile(
-                    displayName: (_firstNameController.text +
-                        " " +
-                        _lastNameController.text));
-                setState(() {
-                  _isLoading = true;
-                });
-                Future.delayed(Duration(seconds: 1), () {
-                  setState(() {
-                    _isLoading = false;
-                  });
-                  Navigator.of(context).pushReplacementNamed(SIGN_IN);
-                });
-              });
+        try{
+          userRegistration();
+          Navigator.of(context).pushReplacementNamed(SIGN_IN);
+        }on Exception catch (e){
+          print("errroorrr!!!");
+        }
+              // auth
+              //     .createUserWithEmailAndPassword(
+              //         email: _emailController.text,
+              //         password: _passwordController.text)
+              //     .then((_) {
+              //   auth.currentUser.updateProfile(
+              //       displayName: (_firstNameController.text +
+              //           " " +
+              //           _lastNameController.text));
+              //   setState(() {
+              //     _isLoading = true;
+              //   });
+              //   Future.delayed(Duration(seconds: 1), () {
+              //     setState(() {
+              //       _isLoading = false;
+              //     });
+              //     Navigator.of(context).pushReplacementNamed(SIGN_IN);
+              //   });
+              // });
             }
           : null,
       textColor: Colors.white,
