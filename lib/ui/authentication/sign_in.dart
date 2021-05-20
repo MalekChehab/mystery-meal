@@ -3,8 +3,10 @@ import 'package:mystery_meal/constants/constants.dart';
 import 'package:mystery_meal/ui/widgets/custom_shape.dart';
 import 'package:mystery_meal/ui/widgets/responsive_ui.dart';
 import 'package:mystery_meal/ui/widgets/custom_textfield.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:loading_overlay/loading_overlay.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class SignIn extends StatefulWidget {
   @override
@@ -20,8 +22,74 @@ class _SignInState extends State<SignIn> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   GlobalKey<FormState> _key = GlobalKey();
-  final auth = FirebaseAuth.instance;
+  // final auth = FirebaseAuth.instance;
   bool _isLoading = false;
+
+  Future userLogin() async{
+
+    // Showing CircularProgressIndicator.
+    setState(() {
+      _isLoading = true ;
+    });
+
+    // Getting value from Controller
+    String email = _emailController.text;
+    String password = _passwordController.text;
+
+    // SERVER LOGIN API URL
+    var url = 'https://mystery-meal.000webhostapp.com/login.php';
+
+    // Store all data with Param Name.
+    var data = {'email': email, 'password' : password};
+
+    // Starting Web API Call.
+    var response = await http.post(url, body: json.encode(data));
+
+    // Getting Server response into variable.
+    var message = jsonDecode(response.body);
+
+    // If the Response Message is Matched.
+    if(message == 'Login Matched')
+    {
+
+      // Hiding the CircularProgressIndicator.
+      setState(() {
+        _isLoading = false;
+      });
+
+      // Navigate to Profile Screen & Sending Email to Next Screen.
+      // Navigator.push(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => ProfileScreen(email : emailController.text))
+      // );
+      Navigator.of(context).pushReplacementNamed(HOME);
+    }else{
+
+      // If Email or Password did not Matched.
+      // Hiding the CircularProgressIndicator.
+      setState(() {
+        _isLoading = false;
+      });
+
+      // Showing Alert Dialog with Response JSON Message.
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: new Text(message),
+            actions: <Widget>[
+              FlatButton(
+                child: new Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -214,30 +282,32 @@ class _SignInState extends State<SignIn> {
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       onPressed: () {
-        if (_key.currentState.validate()) {
-          print("Routing to your account");
-          try {
-             auth
-                .signInWithEmailAndPassword(
-                    email: _emailController.text,
-                    password: _passwordController.text)
-                .then((_) {
-              setState(() {
-                _isLoading = true;
-              });
-              Future.delayed(Duration(seconds: 1), () {
-                setState(() {
-                  _isLoading = false;
-                });
-                Navigator.of(context).pushReplacementNamed(HOME);
-              });
-            });
-          } on FirebaseAuthException catch (e){
-            Scaffold.of(context).showSnackBar(SnackBar(content: Text(e.message), backgroundColor: Colors.red,));
-            print('Failed with error code: ${e.code}');
-            print(e.message);
-          }
-        }
+        Navigator.of(context).pushReplacementNamed(HOME);
+        // userLogin();
+        // if (_key.currentState.validate()) {
+        //   print("Routing to your account");
+        //   try {
+        //      auth
+        //         .signInWithEmailAndPassword(
+        //             email: _emailController.text,
+        //             password: _passwordController.text)
+        //         .then((_) {
+        //       setState(() {
+        //         _isLoading = true;
+        //       });
+        //       Future.delayed(Duration(seconds: 1), () {
+        //         setState(() {
+        //           _isLoading = false;
+        //         });
+        //         Navigator.of(context).pushReplacementNamed(HOME);
+        //       });
+        //     });
+        //   } on FirebaseAuthException catch (e){
+        //     Scaffold.of(context).showSnackBar(SnackBar(content: Text(e.message), backgroundColor: Colors.red,));
+        //     print('Failed with error code: ${e.code}');
+        //     print(e.message);
+        //   }
+        // }
       },
       textColor: Colors.white,
       padding: EdgeInsets.all(0.0),

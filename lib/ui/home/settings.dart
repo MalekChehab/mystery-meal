@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:day_night_switch/day_night_switch.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_overlay/loading_overlay.dart';
@@ -18,56 +18,56 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   bool _isLoading = false;
   int _selectedItem = 3;
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  // final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   bool _preLoading = true;
   File _image;
 
-  _imgFromCamera() async {
-    File image = await ImagePicker.pickImage(
-        source: ImageSource.camera, imageQuality: 50);
-    setState(() {
-      _image = image;
-      _firebaseAuth.currentUser.updateProfile(photoURL: _image.path);
-    });
-  }
+  // _imgFromCamera() async {
+  //   File image = await ImagePicker.pickImage(
+  //       source: ImageSource.camera, imageQuality: 50);
+  //   setState(() {
+  //     _image = image;
+  //     _firebaseAuth.currentUser.updateProfile(photoURL: _image.path);
+  //   });
+  // }
 
-  _imgFromGallery() async {
-    File image = await ImagePicker.pickImage(
-        source: ImageSource.gallery, imageQuality: 50,);
-    setState(() {
-      _image = image;
-      _firebaseAuth.currentUser.updateProfile(photoURL: _image.path);
-    });
-  }
+  // _imgFromGallery() async {
+  //   File image = await ImagePicker.pickImage(
+  //       source: ImageSource.gallery, imageQuality: 50,);
+  //   setState(() {
+  //     _image = image;
+  //     _firebaseAuth.currentUser.updateProfile(photoURL: _image.path);
+  //   });
+  // }
 
-  void _showPicker(context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext bc) {
-          return SafeArea(
-              child: Container(
-                  child: new Wrap(
-            children: [
-              new ListTile(
-                leading: new Icon(Icons.photo_library_rounded),
-                title: new Text('Gallery'),
-                onTap: () {
-                  _imgFromGallery();
-                  Navigator.pop(context);
-                },
-              ),
-              new ListTile(
-                leading: new Icon(Icons.photo_camera_rounded),
-                title: new Text('Camera'),
-                onTap: () {
-                  _imgFromCamera();
-                  Navigator.pop(context);
-                },
-              )
-            ],
-          )));
-        });
-  }
+  // void _showPicker(context) {
+  //   showModalBottomSheet(
+  //       context: context,
+  //       builder: (BuildContext bc) {
+  //         return SafeArea(
+  //             child: Container(
+  //                 child: new Wrap(
+  //           children: [
+  //             new ListTile(
+  //               leading: new Icon(Icons.photo_library_rounded),
+  //               title: new Text('Gallery'),
+  //               onTap: () {
+  //                 _imgFromGallery();
+  //                 Navigator.pop(context);
+  //               },
+  //             ),
+  //             new ListTile(
+  //               leading: new Icon(Icons.photo_camera_rounded),
+  //               title: new Text('Camera'),
+  //               onTap: () {
+  //                 _imgFromCamera();
+  //                 Navigator.pop(context);
+  //               },
+  //             )
+  //           ],
+  //         )));
+  //       });
+  // }
 
   @override
   void initState() {
@@ -102,7 +102,7 @@ class _SettingsState extends State<Settings> {
                             radius: 67,
                             child: GestureDetector(
                               onTap: () {
-                                _showPicker(context);
+                                // _showPicker(context);
                               },
                               child: CircleAvatar(
                                 radius: 63,
@@ -133,7 +133,8 @@ class _SettingsState extends State<Settings> {
                           children: [
                             Expanded(
                               child: Text(
-                                _firebaseAuth.currentUser.displayName,
+                                // _firebaseAuth.currentUser.displayName,
+                                "",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,

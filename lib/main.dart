@@ -13,12 +13,12 @@ import 'package:mystery_meal/ui/home/favorites.dart';
 import 'package:mystery_meal/ui/storedetails.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_core/firebase_core.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  // await Firebase.initializeApp();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
