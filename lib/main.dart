@@ -1,24 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mystery_meal/constants/constants.dart';
-// import 'package:mystery_meal/ui/Provider/sharedPreferences.dart';
-import 'package:mystery_meal/ui/Provider/themeProvider.dart';
+import 'package:mystery_meal/ui/Provider/theme_provider.dart';
 import 'package:mystery_meal/ui/authentication/sign_in.dart';
 import 'package:mystery_meal/ui/authentication/recover.dart';
 import 'package:mystery_meal/ui/authentication/sign_up.dart';
 import 'package:mystery_meal/ui/splashscreen.dart';
 import 'package:mystery_meal/ui/home/home.dart';
 import 'package:mystery_meal/ui/home/settings.dart';
-import 'package:mystery_meal/ui/home/favorites.dart';
-import 'package:mystery_meal/ui/storedetails.dart';
-import 'package:http/http.dart' as http;
+import 'package:mystery_meal/ui/home/orders.dart';
 import 'package:provider/provider.dart';
-// import 'package:firebase_core/firebase_core.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -26,7 +20,18 @@ Future main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) => ChangeNotifierProvider(
       create: (context) => ThemeProvider(),
@@ -45,13 +50,21 @@ class MyApp extends StatelessWidget {
             SIGN_UP: (BuildContext context) => SignUp(),
             HOME: (BuildContext context) => Home(),
             SETTINGS: (BuildContext context) => Settings(),
-            STORE_DETAILS: (BuildContext context) => DetailsScreen(),
-            FAVORITES: (BuildContext context) => Favorites(),
+            ORDERS: (BuildContext context) => Orders(),
           },
           initialRoute: SPLASH_SCREEN,
         );
       },
     );
+
+  var _loginStatus=0;
+
+  // getPref() async {
+  //   SharedPreferences preferences = await SharedPreferences.getInstance();
+  //   setState(() {
+  //     _loginStatus = preferences.getInt("value");
+  //   });
+  // }
 }
 
 

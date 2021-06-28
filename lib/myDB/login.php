@@ -1,63 +1,28 @@
 <?php
 
- //Define your Server host name here.
- $HostName = "localhost";
+$servername = "143.244.152.251";
+$username = "mysterymeal_user_2";
+$password = "mysterymeal_62021";
+$database = "mysterymealdb";
+$db = mysqli_connect($servername,$username,$password,$database);
 
- //Define your MySQL Database Name here.
- $DatabaseName = "id16644001_mysterymeal_db";
-
- //Define your Database User Name here.
- $HostUser = "id16644001_mysterymealdb";
-
- //Define your Database Password here.
- $HostPass = "gmd$0RC09+{NCa%U";
-
- // Creating MySQL Connection.
- $con = mysqli_connect($HostName,$HostUser,$HostPass,$DatabaseName);
-
- // Getting the received JSON into $json variable.
- $json = file_get_contents('php://input');
-
- // Decoding the received JSON and store into $obj variable.
- $obj = json_decode($json,true);
-
- // Getting User email from JSON $obj array and store into $email.
- $email = $obj['email'];
-
- // Getting Password from JSON $obj array and store into $password.
- $password = $obj['password'];
-
- //Applying User Login query with email and password.
- $loginQuery = "select * from users where email = '$email' and password = '$password' ";
-
- // Executing SQL Query.
- $check = mysqli_fetch_array(mysqli_query($con,$loginQuery));
-
-	if(isset($check)){
-
-		 // Successfully Login Message.
-		 $onLoginSuccess = 'Login Matched';
-
-		 // Converting the message into JSON format.
-		 $SuccessMSG = json_encode($onLoginSuccess);
-
-		 // Echo the message.
-		 echo $SuccessMSG ;
-
-	 }
-
-	 else{
-
-		 // If Email and Password did not Matched.
-		$InvalidMSG = 'Invalid Username or Password Please Try Again' ;
-
-		// Converting the message into JSON format.
-		$InvalidMSGJSon = json_encode($InvalidMSG);
-
-		// Echo the message.
-		 echo $InvalidMSGJSon ;
-
-	 }
-
- mysqli_close($con);
-?>
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $profile_type = 'Customer';
+    
+    	$sql = "SELECT * FROM users WHERE username = '$username' AND profile_type = '$profile_type' ";
+    
+    	$result = mysqli_query($db,$sql);
+    
+    	$arr = mysqli_fetch_array($result);
+            
+                $hashedpassword = $arr['password'];
+        
+                if (password_verify($password, $hashedpassword) && mysqli_num_rows($result) ==1 ) {
+                    echo json_encode("Success");
+                } else {
+                  echo json_encode("Error");
+                }
+           
+   
+      ?>  

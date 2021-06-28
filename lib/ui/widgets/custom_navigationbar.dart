@@ -59,7 +59,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
               end: Alignment.topCenter),
         )
             : BoxDecoration(),
-        child: IconButton(icon: icon1,color: Theme.of(context).primaryColor),
+        child: IconButton(icon: icon1,color: Theme.of(context).primaryColor, onPressed: (){},),
       ),
     );
   }

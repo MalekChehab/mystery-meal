@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mystery_meal/constants/constants.dart';
+import 'Provider/user_secure_storage.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -10,23 +11,24 @@ class SplashScreen extends StatefulWidget {
 
 class SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
-  var _visible = true;
 
   // AnimationController animationController;
   // Animation<double> animation;
-  //
+
+  void navigateUser() async{
+    WidgetsFlutterBinding.ensureInitialized();
+    final value = await UserSecureStorage.getLogIn();
+    Navigator.pushReplacementNamed(context, value == 'true' ? HOME : SIGN_IN);
+  }
+
   startTime() async {
     var _duration = new Duration(seconds: 3);
-    return new Timer(_duration, navigationPage);
+    return new Timer(_duration, navigateUser);
   }
-  //
-  void navigationPage() {
-    Navigator.of(context).pushReplacementNamed(SIGN_IN);
-  }
-  //
+
   @override
   void initState() {
-  //   super.initState();
+    super.initState();
   //   // animationController = new AnimationController(
   //   //     vsync: this, duration: new Duration(seconds: 2));
   //   // animation =

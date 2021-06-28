@@ -1,17 +1,16 @@
 <?php
 
+$servername = "143.244.152.251";
+$username = "mysterymeal_user_2";
+$password = "mysterymeal_62021";
+$database = "mysterymealdb";
 
-try{
+// Create connection
+$conn = new mysqli($servername, $username, $password,$database);
 
-$connection = new PDO('mysql:host=localhost;dbname=id16644001_mysterymeal_db','id16644001_mysterymealdb','gmd$0RC09+{NCa%U');
-$connection ->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-echo"Connected Successfully";
-}catch(PDOException $exc){
-echo $exc->getMessage();
-die("couldn't connect");
-
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
 }
-
-
-
+echo "Connected successfully";
 ?>

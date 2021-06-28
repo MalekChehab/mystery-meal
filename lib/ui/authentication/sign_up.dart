@@ -7,9 +7,9 @@ import 'package:mystery_meal/ui/widgets/custom_shape.dart';
 import 'package:mystery_meal/ui/widgets/custom_appbar.dart';
 import 'package:mystery_meal/ui/widgets/responsive_ui.dart';
 import 'package:mystery_meal/ui/widgets/custom_textfield.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:toast/toast.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -23,69 +23,90 @@ class _SignUpState extends State<SignUp> {
   double _pixelRatio;
   bool _large;
   bool _medium;
-  TextEditingController _firstNameController = TextEditingController();
-  TextEditingController _lastNameController = TextEditingController();
+  TextEditingController _firstnameController = TextEditingController();
+  TextEditingController _lastnameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
+  TextEditingController _usernameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   GlobalKey<FormState> _key = GlobalKey();
   // final auth = FirebaseAuth.instance;
   bool _isButtonEnabled = false;
   bool _isLoading = false;
   File _image;
+  var reg = RegExp(
+      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+  bool _keyboardIsVisible() {
+    return !(MediaQuery.of(context).viewInsets.bottom == 0.0);
+  }
 
-
-  Future userRegistration() async{
-
-    // Showing CircularProgressIndicator.
+  signup(firstname, lastname, username, email, password) async {
     setState(() {
-      _isLoading = true ;
+      _isLoading = true;
     });
-
-    // Getting value from Controller
-    String firstName = _firstNameController.text;
-    String lastName = _lastNameController.text;
-    String username = _phoneController.text;
-    String email = _emailController.text;
-    String password = _passwordController.text;
-
-    // SERVER API URL
-    var url = 'https://mystery-meal.000webhostapp.com/register.php';
-
-    // Store all data with Param Name.
-    var data = {"firstname": firstName, 'lastname': lastName, 'username': username, 'email': email, 'password' : password};
-
-    // Starting Web API Call.
-    var response = await http.post(url, body: {"firstname": "$firstName", "lastName": "$lastName", "username": "$username", "email": "$email", "password": "$password"});
-
-    // Getting Server response into variable.
-    var message = jsonDecode(response.body);
-
-    // If Web call Success than Hide the CircularProgressIndicator.
-    if(response.statusCode == 200){
+    print("Calling");
+    Map data = {
+      'email': email,
+      'password': password,
+      'firstname': firstname,
+      'lastname': lastname,
+      'username': username,
+    };
+    print(data.toString());
+    var url = "https://mystery-meal.000webhostapp.com/register.php";
+    final response = await http.post(url,
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: data,
+        encoding: Encoding.getByName("utf-8"));
+    var body = await json.decode(json.encode(response.body));
+    try {
+      if (response.statusCode == 200) {
+        print(body.runtimeType);
+        print(body);
+        if (body[9] == 't') {
+          setState(() {
+            _isLoading = false;
+          });
+          Toast.show(body.toString().substring(25, 48), context,
+              duration: Toast.LENGTH_LONG,
+              gravity: _keyboardIsVisible() ? Toast.CENTER : Toast.BOTTOM);
+        }
+        if (body[9] != 't') {
+          print("success");
+          setState(() {
+            _isLoading = false;
+          });
+          Toast.show("User Registered Successfully", context,
+              duration: Toast.LENGTH_LONG,
+              gravity: _keyboardIsVisible() ? Toast.CENTER : Toast.BOTTOM);
+          Future.delayed(Duration(seconds: 3), () {
+            Navigator.of(context).pushNamed(SIGN_IN);
+          });
+        } else {
+          print(" ${body[1]}");
+        }
+      } else {
+        Toast.show("Please Try again", context,
+            duration: Toast.LENGTH_LONG,
+            gravity: _keyboardIsVisible() ? Toast.CENTER : Toast.BOTTOM);
+      }
+    } on SocketException catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      print(e);
+      _scaffoldKey.currentState.showSnackBar(SnackBar(
+          content: Text(
+              "Please make sure you are connected to the Internet and try again")));
+      return null;
+    } catch (e) {
       setState(() {
         _isLoading = false;
       });
     }
-
-    // Showing Alert Dialog with Response JSON Message.
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: new Text(message),
-          actions: <Widget>[
-            FlatButton(
-              child: new Text("OK"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-
   }
 
   _imgFromCamera() async {
@@ -143,6 +164,7 @@ class _SignUpState extends State<SignUp> {
 
     return Material(
       child: Scaffold(
+        key: _scaffoldKey,
         body: Container(
           height: _height,
           width: _width,
@@ -182,8 +204,8 @@ class _SignUpState extends State<SignUp> {
                   ? _height / 8
                   : (_medium ? _height / 7 : _height / 6.5),
               decoration: BoxDecoration(
-                gradient: LinearGradient(colors:
-                    [Theme.of(context).primaryColor, SecondaryColor]),
+                gradient: LinearGradient(
+                    colors: [Theme.of(context).primaryColor, SecondaryColor]),
               ),
             ),
           ),
@@ -249,15 +271,15 @@ class _SignUpState extends State<SignUp> {
               color: Theme.of(context).primaryColor,
             ),
             child: GestureDetector(
-                onTap: () {
-                  _showPicker(context);
-                  print('Adding photo');
-                },
-                child: Icon(
-                  Icons.add_a_photo,
-                  size: _large ? 22 : (_medium ? 15 : 13),
-                  color: Theme.of(context).scaffoldBackgroundColor,
-                ),
+              onTap: () {
+                _showPicker(context);
+                print('Adding photo');
+              },
+              child: Icon(
+                Icons.add_a_photo,
+                size: _large ? 22 : (_medium ? 15 : 13),
+                color: Theme.of(context).scaffoldBackgroundColor,
+              ),
             ),
           ),
         ),
@@ -278,7 +300,7 @@ class _SignUpState extends State<SignUp> {
             SizedBox(height: _height / 60.0),
             emailTextFormField(),
             SizedBox(height: _height / 60.0),
-            phoneTextFormField(),
+            usernameTextFormField(),
             SizedBox(height: _height / 60.0),
             passwordTextFormField(),
           ],
@@ -289,7 +311,7 @@ class _SignUpState extends State<SignUp> {
 
   Widget firstNameTextFormField() {
     return CustomTextField(
-      textEditingController: _firstNameController,
+      textEditingController: _firstnameController,
       keyboardType: TextInputType.text,
       icon: Icons.person,
       hint: "First Name",
@@ -298,7 +320,7 @@ class _SignUpState extends State<SignUp> {
 
   Widget lastNameTextFormField() {
     return CustomTextField(
-      textEditingController: _lastNameController,
+      textEditingController: _lastnameController,
       keyboardType: TextInputType.text,
       icon: Icons.person,
       hint: "Last Name",
@@ -314,9 +336,9 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  Widget phoneTextFormField() {
+  Widget usernameTextFormField() {
     return CustomTextField(
-      // textEditingController: _phoneController,
+      textEditingController: _usernameController,
       keyboardType: TextInputType.text,
       icon: Icons.person_outline_rounded,
       hint: "Username",
@@ -383,31 +405,59 @@ class _SignUpState extends State<SignUp> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       onPressed: _isButtonEnabled
           ? () {
-        try{
-          userRegistration();
-          Navigator.of(context).pushReplacementNamed(SIGN_IN);
-        }on Exception catch (e){
-          print("errroorrr!!!");
-        }
-              // auth
-              //     .createUserWithEmailAndPassword(
-              //         email: _emailController.text,
-              //         password: _passwordController.text)
-              //     .then((_) {
-              //   auth.currentUser.updateProfile(
-              //       displayName: (_firstNameController.text +
-              //           " " +
-              //           _lastNameController.text));
-              //   setState(() {
-              //     _isLoading = true;
-              //   });
-              //   Future.delayed(Duration(seconds: 1), () {
-              //     setState(() {
-              //       _isLoading = false;
-              //     });
-              //     Navigator.of(context).pushReplacementNamed(SIGN_IN);
-              //   });
-              // });
+              if (_isLoading) {
+                return;
+              }
+              if (_firstnameController.text.isEmpty) {
+                Toast.show("Please Enter Name", context,
+                    duration: Toast.LENGTH_LONG,
+                    gravity:
+                        _keyboardIsVisible() ? Toast.CENTER : Toast.BOTTOM);
+                return;
+              }
+              if (_lastnameController.text.isEmpty) {
+                Toast.show("Please Enter Last Name", context,
+                    duration: Toast.LENGTH_LONG,
+                    gravity:
+                    _keyboardIsVisible() ? Toast.CENTER : Toast.BOTTOM);
+                return;
+              }
+              if (_usernameController.text.isEmpty) {
+                Toast.show("Please Enter Username", context,
+                    duration: Toast.LENGTH_LONG,
+                    gravity:
+                    _keyboardIsVisible() ? Toast.CENTER : Toast.BOTTOM);
+                return;
+              }
+              if (!reg.hasMatch(_emailController.text)) {
+                Toast.show("Enter Valid Email", context,
+                    duration: Toast.LENGTH_LONG,
+                    gravity:
+                        _keyboardIsVisible() ? Toast.CENTER : Toast.BOTTOM);
+                return;
+              }
+              if (_passwordController.text.isEmpty ||
+                  _passwordController.text.length < 6) {
+                Toast.show("Password should be min 6 characters", context,
+                    duration: Toast.LENGTH_LONG,
+                    gravity:
+                        _keyboardIsVisible() ? Toast.CENTER : Toast.BOTTOM);
+                return;
+              }
+              try {
+                signup(
+                    _firstnameController.text,
+                    _lastnameController.text,
+                    _usernameController.text,
+                    _emailController.text,
+                    _passwordController.text);
+              } on Exception catch (e) {
+                print(e);
+                Toast.show(e.toString(), context,
+                    duration: Toast.LENGTH_LONG,
+                    gravity:
+                        _keyboardIsVisible() ? Toast.CENTER : Toast.BOTTOM);
+              }
             }
           : null,
       textColor: Colors.white,

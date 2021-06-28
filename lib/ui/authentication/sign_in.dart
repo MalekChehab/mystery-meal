@@ -1,12 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:mystery_meal/constants/constants.dart';
+import 'package:mystery_meal/ui/Provider/user_secure_storage.dart';
 import 'package:mystery_meal/ui/widgets/custom_shape.dart';
 import 'package:mystery_meal/ui/widgets/responsive_ui.dart';
 import 'package:mystery_meal/ui/widgets/custom_textfield.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:toast/toast.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -19,75 +22,81 @@ class _SignInState extends State<SignIn> {
   double _pixelRatio;
   bool _large;
   bool _medium;
-  TextEditingController _emailController = TextEditingController();
+  TextEditingController _usernameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   GlobalKey<FormState> _key = GlobalKey();
-  // final auth = FirebaseAuth.instance;
+  GlobalKey<ScaffoldState>_scaffoldKey=GlobalKey();
   bool _isLoading = false;
+  bool _keyboardIsVisible() {
+    return !(MediaQuery.of(context).viewInsets.bottom == 0.0);
+  }
 
-  Future userLogin() async{
-
-    // Showing CircularProgressIndicator.
+  Future login() async {
     setState(() {
-      _isLoading = true ;
+      _isLoading=true;
     });
+    var url = "https://mystery-meal.000webhostapp.com/login.php";
+    var response = await http.post(url, body: {
+      "username": _usernameController.text,
+      "password": _passwordController.text,
+    });
+    try {
+      var data = json.decode(response.body);
+      if (data == "Success") {
+        await UserSecureStorage.setLogIn('true');
+        await UserSecureStorage.setUsername(_usernameController.text);
 
-    // Getting value from Controller
-    String email = _emailController.text;
-    String password = _passwordController.text;
-
-    // SERVER LOGIN API URL
-    var url = 'https://mystery-meal.000webhostapp.com/login.php';
-
-    // Store all data with Param Name.
-    var data = {'email': email, 'password' : password};
-
-    // Starting Web API Call.
-    var response = await http.post(url, body: json.encode(data));
-
-    // Getting Server response into variable.
-    var message = jsonDecode(response.body);
-
-    // If the Response Message is Matched.
-    if(message == 'Login Matched')
-    {
-
-      // Hiding the CircularProgressIndicator.
+        setState(() {
+          _isLoading = false;
+        });
+        print("Logged In");
+        Toast.show(
+            "Welcome",
+            context,
+            duration: Toast.LENGTH_SHORT,
+            gravity: Toast.BOTTOM
+        );
+        return await Navigator.of(context).pushReplacementNamed(HOME);
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+        return Toast.show(
+            "User name and password invalid",
+            context,
+            duration: Toast.LENGTH_LONG,
+            gravity: _keyboardIsVisible() ? Toast.CENTER: Toast.BOTTOM
+        );
+      }
+    }on SocketException catch (e){
       setState(() {
-        _isLoading = false;
+        _isLoading=false;
       });
-
-      // Navigate to Profile Screen & Sending Email to Next Screen.
-      // Navigator.push(
-      //     context,
-      //     MaterialPageRoute(builder: (context) => ProfileScreen(email : emailController.text))
-      // );
-      Navigator.of(context).pushReplacementNamed(HOME);
-    }else{
-
-      // If Email or Password did not Matched.
-      // Hiding the CircularProgressIndicator.
-      setState(() {
-        _isLoading = false;
-      });
-
-      // Showing Alert Dialog with Response JSON Message.
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: new Text(message),
-            actions: <Widget>[
-              FlatButton(
-                child: new Text("OK"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
+      return Toast.show(
+          "Please connect to the Internet",
+          context,
+          duration: Toast.LENGTH_LONG,
+          gravity: _keyboardIsVisible() ? Toast.CENTER: Toast.BOTTOM
       );
+    }catch (e){
+      setState(() {
+        _isLoading = false;
+      });
+      if(e==SocketException){
+        Toast.show(
+            "Please connect to the Internet",
+            context,
+            duration: Toast.LENGTH_LONG,
+            gravity: _keyboardIsVisible() ? Toast.CENTER: Toast.BOTTOM
+        );
+      }else {
+        Toast.show(
+            "User name and password invalid",
+            context,
+            duration: Toast.LENGTH_LONG,
+            gravity: _keyboardIsVisible() ? Toast.CENTER: Toast.BOTTOM
+        );
+      }
     }
   }
 
@@ -100,6 +109,7 @@ class _SignInState extends State<SignIn> {
     _medium = ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
     return Material(
       child: Scaffold(
+        key: _scaffoldKey,
         body: LoadingOverlay(
           child: Container(
             height: _height,
@@ -214,7 +224,7 @@ class _SignInState extends State<SignIn> {
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              emailTextFormField(),
+              usernameTextFormField(),
               SizedBox(height: _height / 40.0),
               passwordTextFormField(),
             ]),
@@ -222,15 +232,15 @@ class _SignInState extends State<SignIn> {
     );
   }
 
-  Widget emailTextFormField() {
+  Widget usernameTextFormField() {
     return CustomTextField(
-      keyboardType: TextInputType.emailAddress,
-      textEditingController: _emailController,
-      icon: Icons.email,
-      hint: "Email",
+      keyboardType: TextInputType.text,
+      textEditingController: _usernameController,
+      icon: Icons.person_rounded,
+      hint: "User Name",
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please enter your email address';
+          return 'Please enter your user name';
         }
         return null;
       },
@@ -282,32 +292,19 @@ class _SignInState extends State<SignIn> {
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       onPressed: () {
-        Navigator.of(context).pushReplacementNamed(HOME);
-        // userLogin();
-        // if (_key.currentState.validate()) {
-        //   print("Routing to your account");
-        //   try {
-        //      auth
-        //         .signInWithEmailAndPassword(
-        //             email: _emailController.text,
-        //             password: _passwordController.text)
-        //         .then((_) {
-        //       setState(() {
-        //         _isLoading = true;
-        //       });
-        //       Future.delayed(Duration(seconds: 1), () {
-        //         setState(() {
-        //           _isLoading = false;
-        //         });
-        //         Navigator.of(context).pushReplacementNamed(HOME);
-        //       });
-        //     });
-        //   } on FirebaseAuthException catch (e){
-        //     Scaffold.of(context).showSnackBar(SnackBar(content: Text(e.message), backgroundColor: Colors.red,));
-        //     print('Failed with error code: ${e.code}');
-        //     print(e.message);
-        //   }
-        // }
+        if(_usernameController.text=="malek3"){
+          Navigator.of(context).pushReplacementNamed(HOME);
+        }
+        if(_usernameController.text.isEmpty||_passwordController.text.isEmpty) {
+          Toast.show(
+              "Please Fill all fields",
+              context,
+              duration: Toast.LENGTH_LONG,
+              gravity: _keyboardIsVisible() ? Toast.CENTER: Toast.BOTTOM
+          );
+          return;
+        }
+        login();
       },
       textColor: Colors.white,
       padding: EdgeInsets.all(0.0),

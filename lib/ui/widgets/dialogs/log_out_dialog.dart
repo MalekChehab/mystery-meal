@@ -1,8 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:mystery_meal/constants/constants.dart';
-import 'package:mystery_meal/ui/widgets/custom_textfield.dart';
+import 'package:mystery_meal/ui/Provider/user_secure_storage.dart';
 import 'custom_dialog.dart';
 
 class LogOutDialog extends StatefulWidget {
@@ -11,7 +10,6 @@ class LogOutDialog extends StatefulWidget {
 }
 
 class _LogOutDialogState extends State<LogOutDialog> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   bool _isLoading = false;
 
   @override
@@ -20,6 +18,7 @@ class _LogOutDialogState extends State<LogOutDialog> {
       child: CustomDialog(
         text: "Are you sure you want to log out?",
         primaryButton: primaryButton(context),
+        showSecondaryButton: true,
       ),
       isLoading: _isLoading,
     );
@@ -37,33 +36,20 @@ class _LogOutDialogState extends State<LogOutDialog> {
           color: Theme.of(context).primaryColor,
         ),
       ),
-      onPressed: () {
+      onPressed: () async{
         print("Sign out");
         setState(() {
           _isLoading = true;
         });
-        Future.delayed(Duration(seconds: 1), () {
+        Future.delayed(Duration(seconds: 1), () async{
           setState(() {
             _isLoading = false;
           });
           Navigator.pop(context);
-          _auth.signOut();
-          Navigator.of(context).pushReplacementNamed(SIGN_IN);
+          await UserSecureStorage.setLogIn('false');
+          Navigator.of(context).pushNamedAndRemoveUntil(SIGN_IN, ModalRoute.withName('SIGN'));
         });
       },
     );
-  }
-
-  logOut() {
-
-    setState(() {
-      _isLoading = true;
-    });
-    Future.delayed(Duration(seconds: 1), () {
-      setState(() {
-        _isLoading = false;
-      });
-
-    });
   }
 }

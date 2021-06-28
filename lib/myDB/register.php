@@ -1,80 +1,74 @@
 <?php
+$servername = "143.244.152.251";
+$username = "mysterymeal_user_2";
+$password = "mysterymeal_62021";
+$database = "mysterymealdb";
+$conn = mysqli_connect($servername,$username,$password,$database);
+$response;
 
-//Define your Server host name here.
-$HostName = "localhost";
-
-//Define your MySQL Database Name here.
-$DatabaseName = "id16644001_mysterymeal_db";
-
-//Define your Database User Name here.
-$HostUser = "id16644001_mysterymealdb";
-
-//Define your Database Password here.
-$HostPass = "gmd$0RC09+{NCa%U";
-
-// Creating MySQL Connection.
-$con = mysqli_connect($HostName,$HostUser,$HostPass,$DatabaseName);
-
-// Storing the received JSON into $json variable.
-$json = file_get_contents('php://input');
-
-// Decode the received JSON and Store into $obj variable.
-$obj = json_decode($json,true);
-
-// Getting firstname from $obj object.
-$firstname = $obj['firstname'];
-
-//Getting lastname from $obj object.
-$lastname = $obj['lastname'];
-
-$username = $obj['username'];
-
-// Getting Email from $obj object.
-$email = $obj['email'];
-
-// Getting Password from $obj object.
-$password = $obj['password'];
-
-// Checking whether Email is Already Exist or Not in MySQL Table.
-$CheckSQL = "SELECT * FROM users WHERE email='$email'";
-
-// Executing Email Check MySQL Query.
-$check = mysqli_fetch_array(mysqli_query($con,$CheckSQL));
-
-if(isset($check)){
-
-	 $emailExist = 'Email Already Exist, Please Try Again With New Email Address..!';
-
-	 // Converting the message into JSON format.
-// 	$existEmailJSON = json_encode($emailExist);
-echo "already existing email";
-	// Echo the message on Screen.
-	 echo $existEmailJSON ;
-
-  }
- else{
-
-	 // Creating SQL query and insert the record into MySQL database table.
-	 $Sql_Query = "insert into users (firstname,lastname,email,password) values ('$firstname','$lastname','$email','$password')";
-
-
-	 if(mysqli_query($con,$Sql_Query)){
-
-		 // If the record inserted successfully then show the message.
-		$MSG = 'User Registered Successfully' ;
-
-		// Converting the message into JSON format.
-		$json = json_encode($MSG);
-
-		// Echo the message.
-		 echo $json ;
-
+$keys=array('firstname','lastname','username','email','password');
+//$keys=array('name','mobile','password','type');
+for ($i = 0; $i < count($keys); $i++){
+	if(!isset($_POST[$keys[$i]])){
+		  $response['error'] = true;
+			$response['message'] = 'Required Filed Missed';
+			echo json_encode($response);
+		  return;
 	 }
-	 else{
+}
 
-		echo 'Try Again';
+$password=PASSWORD_HASH($_POST['password'], PASSWORD_DEFAULT);
+$email=$_POST['email'];
+$firstname=$_POST['firstname'];
+$lastname=$_POST['lastname'];
+$username=$_POST['username'];
+$profile_type='Customer';
 
-	 }
- }
- mysqli_close($con);
+//checking if the user is already exist with this username or email
+					//as the email and username should be unique for every user
+				    $stmt = $conn->prepare("SELECT id FROM users WHERE email = ? ");
+					$stmt->bind_param("s", $email);
+					$stmt->execute();
+					$stmt->store_result();
+					//if the user already exist in the database
+					if($stmt->num_rows > 0){
+						$response['error'] = true;
+						$response['message'] = 'User already registered';
+						$stmt->close();
+					}else{
+						//if user is new creating an insert query
+						$stmt = $conn->prepare("INSERT INTO users (firstname, lastname, username, email, password, profile_type) VALUES (?, ?, ?, ?, ?, ?)");
+						$stmt->bind_param("ssssss",  $firstname, $lastname, $username, $email, $password, $profile_type);
+
+						//if the user is successfully added to the database
+						if($stmt->execute()){
+
+							//fetching the user back
+							$stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
+							$stmt->bind_param("s",$email);
+							$stmt->execute();
+							$stmt->bind_result( $id, $firstname, $lastname, $username, $email, $password, $profile_type);
+							$stmt->fetch();
+
+							$user = array(
+								'id'=>$id,
+								'firstname'=>$firstname,
+								'lastname'=>$lastname,
+								'username'=>$username,
+								'email'=>$email,
+								'password'=>$password,
+								'profile_type'=>$profile_type,
+							);
+
+							$stmt->close();
+
+							//adding the user data in response
+							$response['error'] = false;
+							$response['message'] = 'User registered successfully';
+				// 			$response['data'] = $user;
+
+						}
+
+					}
+					echo json_encode($response);
 ?>

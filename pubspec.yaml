@@ -30,11 +30,14 @@ dependencies:
   smooth_star_rating: ^1.0.4
   provider: ^4.3.2+3
   day_night_switch: ^0.0.2+1
-  firebase_core:
-  firebase_auth:
   loading_overlay: ^0.2.1
   image_picker: ^0.6.6+5
   http: ^0.12.0+2
+  toast:
+  url_launcher:
+  flutter_secure_storage:
+  expandable_bottom_bar:
+
 
 dev_dependencies:
   flutter_test:

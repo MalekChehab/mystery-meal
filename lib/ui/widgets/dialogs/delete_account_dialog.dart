@@ -1,5 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:mystery_meal/constants/constants.dart';
@@ -14,7 +12,6 @@ class DeleteAccountDialog extends StatefulWidget {
 
 class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
   TextEditingController _passwordController = TextEditingController();
-  var user = FirebaseAuth.instance.currentUser;
   bool _isLoading = false;
 
   @override
@@ -26,22 +23,20 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
       hint: 'Password',
       obscureText: true,
     );
-    return
-      LoadingOverlay(
-        child: CustomDialog(
-          textBox1: password,
-          text: "Please enter your password to proceed",
-          primaryButton: primaryButton(context),
-        ),
+    return LoadingOverlay(
+      child: CustomDialog(
+        textBox1: password,
+        text: "Please enter your password to proceed",
+        primaryButton: primaryButton(context),
+      ),
       isLoading: _isLoading,
     );
   }
 
-  Widget primaryButton(BuildContext context){
+  Widget primaryButton(BuildContext context) {
     return RaisedButton(
       color: Theme.of(context).scaffoldBackgroundColor,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       child: Text(
         "Delete",
         maxLines: 1,
@@ -51,41 +46,29 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
         ),
       ),
       onPressed: () {
-        var credentials = EmailAuthProvider.credential(email: user.email, password: _passwordController.text);
-        user.reauthenticateWithCredential(credentials).then((_) {
-          user.delete();
-          setState(() {
-            _isLoading = true;
-          });
-          Future.delayed(Duration(seconds: 1), () {
-            setState(() {
-              _isLoading = false;
-            });
-            DialogHelper.goodBye(context);
-            Future.delayed(Duration(seconds: 5), () {
-              // Widget goodBye(){
-              //   return Dialog(
-              //     child: Text("Goodbye"),
-              //   );
-              // }
-              Navigator.pop(context);
-              Navigator.of(context).pushReplacementNamed(SIGN_IN);
-            });
-
-          });
-          // print("Account Deleted");
-          // Navigator.pop(context);
-          // Navigator.pushReplacementNamed(context, SIGN_IN);
+        //code
+        setState(() {
+          _isLoading = true;
         });
+        Future.delayed(Duration(seconds: 1), () {
+          setState(() {
+            _isLoading = false;
+          });
+          DialogHelper.goodBye(context);
+          Future.delayed(Duration(seconds: 5), () {
+            Navigator.pop(context);
+            Navigator.of(context).pushReplacementNamed(SIGN_IN);
+          });
+        });
+        print("Account Deleted");
       },
     );
   }
 }
 
-class GoodByeDialog extends StatelessWidget{
-
+class GoodByeDialog extends StatelessWidget {
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return CustomDialog(
       text: "We are sorry to see you go!",
       showSecondaryButton: false,

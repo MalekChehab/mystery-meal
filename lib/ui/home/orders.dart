@@ -1,28 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:mystery_meal/constants/constants.dart';
+import 'package:mystery_meal/ui/Provider/user_secure_storage.dart';
 import 'package:mystery_meal/ui/home/home.dart';
 import 'package:mystery_meal/ui/widgets/custom_appbar.dart';
 import 'package:mystery_meal/ui/widgets/custom_navigationbar.dart';
 import 'package:mystery_meal/ui/widgets/home_view.dart';
+import 'package:mystery_meal/ui/widgets/order.dart';
 
-class Favorites extends StatefulWidget {
+class Orders extends StatefulWidget {
   @override
-  _FavoritesState createState() => _FavoritesState();
+  _OrdersState createState() => _OrdersState();
 }
 
-class _FavoritesState extends State<Favorites> {
+class _OrdersState extends State<Orders> {
   bool _preLoading = true;
   int _selectedItem = 1;
   bool _searching = false;
+  String username='';
 
   @override
   void initState() {
     super.initState();
+    init();
     Future.delayed(Duration(seconds: 1), () {
       setState(() {
         _preLoading = false;
+        // dispose();
       });
     });
+  }
+  Future init() async{
+    username = await UserSecureStorage.getUsername();
   }
 
   @override
@@ -57,15 +65,35 @@ class _FavoritesState extends State<Favorites> {
             tooltip: "Location",
             onPressed: () {}),
       ),
-      body: Center(
-        child: _preLoading
-            ? CircularProgressIndicator()
-            : Container(
-                height: _height,
-                width: _width,
-
-              ),
+      body:Center(
+        child: Container(
+          child: new FutureBuilder<List<Order>>(
+            future: ordersDownloadJSON(username),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                List<Order> orders = snapshot.data;
+                return new OrdersListView(orders);
+              } else if (snapshot.hasError) {
+                return Text('${snapshot.error}');
+              }
+              //return  a circular progress indicator.
+              return new CircularProgressIndicator();
+            },
+          ),
+        ),
       ),
+      // Center(
+      //   child: _preLoading
+      //       ? CircularProgressIndicator()
+      //       : Container(
+      //           height: _height,
+      //           width: _width,
+      //     child: Center(
+      //       child: OrdersListView(widget.orders),
+      //     ),
+      //         ),
+      // ),
+
       bottomNavigationBar: CustomBottomNavigationBar(
         defaultSelectedIndex: 1,
         iconList: [
@@ -84,11 +112,6 @@ class _FavoritesState extends State<Favorites> {
             },
             tooltip: 'Favorites',
           ),
-          // IconButton(
-          //   icon: Icon(Icons.list_alt_outlined),
-          //   onPressed: () {},
-          //   tooltip: 'Orders',
-          // ),
           IconButton(
             icon: Icon(Icons.settings_rounded),
             onPressed: () {
@@ -106,3 +129,4 @@ class _FavoritesState extends State<Favorites> {
     );
   }
 }
+

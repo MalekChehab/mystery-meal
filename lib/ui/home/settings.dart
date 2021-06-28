@@ -1,13 +1,13 @@
 import 'dart:io';
 import 'package:day_night_switch/day_night_switch.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:mystery_meal/constants/dialog_helper.dart';
+import 'package:mystery_meal/ui/Provider/user_secure_storage.dart';
 import 'package:mystery_meal/ui/widgets/custom_navigationbar.dart';
 import 'package:mystery_meal/constants/constants.dart';
-import 'package:mystery_meal/ui/Provider/themeProvider.dart';
+import 'package:mystery_meal/ui/Provider/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 class Settings extends StatefulWidget {
@@ -21,60 +21,69 @@ class _SettingsState extends State<Settings> {
   // final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   bool _preLoading = true;
   File _image;
+  final controllerName = TextEditingController();
 
-  // _imgFromCamera() async {
-  //   File image = await ImagePicker.pickImage(
-  //       source: ImageSource.camera, imageQuality: 50);
-  //   setState(() {
-  //     _image = image;
-  //     _firebaseAuth.currentUser.updateProfile(photoURL: _image.path);
-  //   });
-  // }
+  _imgFromCamera() async {
+    File image = await ImagePicker.pickImage(
+        source: ImageSource.camera, imageQuality: 50);
+    setState(() {
+      _image = image;
+      // _firebaseAuth.currentUser.updateProfile(photoURL: _image.path);
+    });
+  }
 
-  // _imgFromGallery() async {
-  //   File image = await ImagePicker.pickImage(
-  //       source: ImageSource.gallery, imageQuality: 50,);
-  //   setState(() {
-  //     _image = image;
-  //     _firebaseAuth.currentUser.updateProfile(photoURL: _image.path);
-  //   });
-  // }
+  _imgFromGallery() async {
+    File image = await ImagePicker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 50,
+    );
+    setState(() {
+      _image = image;
+      // _firebaseAuth.currentUser.updateProfile(photoURL: _image.path);
+    });
+  }
 
-  // void _showPicker(context) {
-  //   showModalBottomSheet(
-  //       context: context,
-  //       builder: (BuildContext bc) {
-  //         return SafeArea(
-  //             child: Container(
-  //                 child: new Wrap(
-  //           children: [
-  //             new ListTile(
-  //               leading: new Icon(Icons.photo_library_rounded),
-  //               title: new Text('Gallery'),
-  //               onTap: () {
-  //                 _imgFromGallery();
-  //                 Navigator.pop(context);
-  //               },
-  //             ),
-  //             new ListTile(
-  //               leading: new Icon(Icons.photo_camera_rounded),
-  //               title: new Text('Camera'),
-  //               onTap: () {
-  //                 _imgFromCamera();
-  //                 Navigator.pop(context);
-  //               },
-  //             )
-  //           ],
-  //         )));
-  //       });
-  // }
+  void _showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+              child: Container(
+                  child: new Wrap(
+            children: [
+              new ListTile(
+                leading: new Icon(Icons.photo_library_rounded),
+                title: new Text('Gallery'),
+                onTap: () {
+                  _imgFromGallery();
+                  Navigator.pop(context);
+                },
+              ),
+              new ListTile(
+                leading: new Icon(Icons.photo_camera_rounded),
+                title: new Text('Camera'),
+                onTap: () {
+                  _imgFromCamera();
+                  Navigator.pop(context);
+                },
+              )
+            ],
+          )));
+        });
+  }
 
   @override
   void initState() {
     super.initState();
+    init();
+  }
+
+  Future init() async{
+    final localUsername = await UserSecureStorage.getUsername() ?? '';
     Future.delayed(Duration(seconds: 1), () {
       setState(() {
         _preLoading = false;
+        this.controllerName.text = localUsername;
       });
     });
   }
@@ -102,7 +111,7 @@ class _SettingsState extends State<Settings> {
                             radius: 67,
                             child: GestureDetector(
                               onTap: () {
-                                // _showPicker(context);
+                                _showPicker(context);
                               },
                               child: CircleAvatar(
                                 radius: 63,
@@ -131,21 +140,34 @@ class _SettingsState extends State<Settings> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Expanded(
-                              child: Text(
-                                // _firebaseAuth.currentUser.displayName,
-                                "",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20.0,
-                                ),
-                              ),
-                            ),
+                        Text(
+                          this.controllerName.text,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                            // FutureBuilder(
+                            //   future: FlutterSession().get('token'),
+                            //   builder: (context, snapshot) {
+                            //     return Text(
+                            //       snapshot.hasData
+                            //           ? snapshot.data
+                            //           : "Loading...",
+                            //       textAlign: TextAlign.center,
+                            //       style: TextStyle(
+                            //         fontSize: 20,
+                            //         fontWeight: FontWeight.bold,
+                            //       ),
+                            //     );
+                            //   },
+                            // ),
                             GestureDetector(
                               child: Icon(Icons.edit_rounded),
                               onTap: () => DialogHelper.changeUserName(context),
                             ),
+                            // ),
                           ],
                         ),
                         const SizedBox(height: 20.0),
@@ -155,13 +177,14 @@ class _SettingsState extends State<Settings> {
                           trailing: Transform.scale(
                             scale: 0.34,
                             child: DayNightSwitch(
-                                value: themeProvider.isDarkMode,
-                                onChanged: (value) {
-                                  final provider = Provider.of<ThemeProvider>(
-                                      context,
-                                      listen: false);
-                                  provider.toggleTheme(value);
-                                },
+                              value: themeProvider.isDarkTheme,
+                              onChanged: (value) async{
+                                final provider = Provider.of<ThemeProvider>(
+                                    context,
+                                    listen: false);
+                                // await UserSecureStorage.
+                                provider.toggleTheme(value);
+                              },
                             ),
                           ),
                         ),
@@ -233,15 +256,14 @@ class _SettingsState extends State<Settings> {
           IconButton(
               icon: Icon(Icons.list_alt_rounded),
               onPressed: () {
-                Navigator.of(context).pushNamed(FAVORITES);
+                Navigator.of(context).pushNamed(ORDERS);
               }),
           // IconButton(icon: Icon(Icons.list_alt_outlined), onPressed: () {}),
           IconButton(
               icon: Icon(Icons.settings_rounded),
               onPressed: () {
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                        builder: (BuildContext context) => super.widget));
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (BuildContext context) => super.widget));
               }),
         ],
         onChange: (val) {
